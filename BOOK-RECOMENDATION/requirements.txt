@@ -1,0 +1,36 @@
+# ---------------------
+# Core Data Science
+# ---------------------
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+
+
+
+# ---------------------
+# API & Web
+# ---------------------
+requests
+fastapi
+
+# ---------------------
+# Experiment Tracking & MLOps
+# ---------------------
+mlflow
+dvc
+dagshub
+
+# ---------------------
+# Utilities
+# ---------------------
+pyyaml
+tqdm
+loguru          # for better logging
+
+# ---------------------
+# Notebooks
+# ---------------------
+jupyter
+ipykernel
