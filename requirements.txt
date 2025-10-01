@@ -34,3 +34,4 @@ loguru          # for better logging
 # ---------------------
 jupyter
 ipykernel
+-e .
