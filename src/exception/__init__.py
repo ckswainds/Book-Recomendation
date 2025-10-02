@@ -1,3 +1,4 @@
+
 """
 Custom exceptions for the Book Recommendation System.
 """
