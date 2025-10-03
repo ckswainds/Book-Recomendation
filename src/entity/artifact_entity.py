@@ -13,3 +13,8 @@ class DataIngestionArtifact:
 class DataCleaningArtifact:
     cleaned_books_data_filepath:str
     cleaned_papers_data_filepath:str
+    
+@dataclass
+class BuildFeaturesArifact:
+    modified_books_data_filepath:str
+    modified_papers_data_filepath:str
