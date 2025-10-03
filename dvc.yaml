@@ -18,3 +18,15 @@ stages:
     outs:
       - data/raw/Ml_books.csv
       - data/raw/all_papers.csv
+
+  build_features:
+    cmd: python src/data/build_features.py
+    deps:
+      - src/data/build_features.py
+      - src/entity/config_entity.py
+      - src/entity/artifact_entity.py
+      - data/raw/Ml_books.csv
+      - data/raw/all_papers.csv
+    outs:
+      - data/interim/modified_books.csv
+      - data/interim/modified_papers.csv
