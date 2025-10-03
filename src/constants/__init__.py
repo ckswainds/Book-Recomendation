@@ -7,3 +7,10 @@ FEATURE_STORE_DIRNAME:str="data"
 FEATURE_STORE_EXTERNAL_DATA_FOLDER:str="external"
 BOOKS_DATA_FILENAME:str="Ml_books.json"
 PAPERS_DATA_FILENAME:str="all_papers.json"
+
+
+#Data cleaning constants
+CLEANED_DATA_DIRNAME:str="data"
+CLEANED_DATA_FOLDER:str="raw"
+CLEANED_BOOKS_DATA_FILENAME:str="Ml_books.csv"
+CLEANED_PAPERS_DATA_FILENAME:str="all_papers.csv"

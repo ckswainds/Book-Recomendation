@@ -9,15 +9,47 @@ stages:
       size: 7713
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 7f02717d8c09eb21a844daffb3dca93b
-      size: 194
+      md5: eca961d8cf616f5742640baaf4a134d6
+      size: 316
     - path: src/entity/config_entity.py
       hash: md5
-      md5: d8b1da7fdea55c3101c41328ab6b9a61
-      size: 583
+      md5: 92afeab82bbaa1dac61eeba45c4b4b5b
+      size: 718
     outs:
     - path: data/external
       hash: md5
-      md5: 21e25621a1155d8b660d259950e86792.dir
-      size: 9851446
+      md5: e38110e4791c521702bee31b77f3f8ed.dir
+      size: 7722596
       nfiles: 2
+  data_cleaning:
+    cmd: python src/data/cleaning.py
+    deps:
+    - path: data/external/Ml_books.json
+      hash: md5
+      md5: 0be5ea3fd27ac1aa8392bf0edc35c0e7
+      size: 6544038
+    - path: data/external/all_papers.json
+      hash: md5
+      md5: 31b3fba5c22649b5e5551b4faabb7d1c
+      size: 1178558
+    - path: src/data/cleaning.py
+      hash: md5
+      md5: fb76da5e7ad3107cc25e54037034c79a
+      size: 7628
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: eca961d8cf616f5742640baaf4a134d6
+      size: 316
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: 92afeab82bbaa1dac61eeba45c4b4b5b
+      size: 718
+    outs:
+    - path: data/raw/Ml_books.csv
+      hash: md5
+      md5: 05534d22d9a018ce26a8bb0e94702285
+      size: 1562965
+    - path: data/raw/all_papers.csv
+      hash: md5
+      md5: 816c9fb37b1a9ad3f15631150c70cdf2
+      size: 517257
