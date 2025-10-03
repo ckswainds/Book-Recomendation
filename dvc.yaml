@@ -7,3 +7,14 @@ stages:
       - src/entity/artifact_entity.py
     outs:
       - data/external
+
+  data_cleaning:
+    cmd: python src/data/cleaning.py
+    deps:
+      - src/data/cleaning.py
+      - src/entity/config_entity.py
+      - src/entity/artifact_entity.py
+
+    outs:
+      - data/raw/Ml_books.csv
+      - data/raw/all_papers.csv
