@@ -44,3 +44,15 @@ stages:
       - data/processed/models
       - data/processed/matrices
       - data/processed/final
+
+  prediction:
+    cmd: python src/models/model1/predict.py "machine learning" > data/processed/predictions.json
+    deps:
+      - src/models/model1/predict.py
+      - data/processed/models
+      - data/processed/matrices
+      - data/processed/final
+      - data/interim/modified_books.csv
+      - data/interim/modified_papers.csv
+    outs:
+      - data/processed/predictions.json
