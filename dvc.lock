@@ -58,8 +58,8 @@ stages:
       size: 586898
     - path: src/data/build_features.py
       hash: md5
-      md5: 71647b2bd715b6a48d8be2f828e98990
-      size: 9577
+      md5: 293a333ff16b61080ab3116264ebbbbe
+      size: 14093
     - path: src/entity/artifact_entity.py
       hash: md5
       md5: 4e367c284b9758138d276ea42df67dd5
@@ -71,9 +71,9 @@ stages:
     outs:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 792bbf47cc8b88f5fde4f8c6b5992638
-      size: 1608852
+      md5: f89f9dffa289602c8b3c4a739cf21684
+      size: 2973249
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: 80fe6984abb02e5f4e8679eb478f7f4d
-      size: 606274
+      md5: 322b14da2bb2031afcb2e0cb32661124
+      size: 1113583
