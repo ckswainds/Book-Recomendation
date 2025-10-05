@@ -14,7 +14,6 @@ stages:
       - src/data/cleaning.py
       - src/entity/config_entity.py
       - src/entity/artifact_entity.py
-
     outs:
       - data/raw/Ml_books.csv
       - data/raw/all_papers.csv
@@ -43,15 +42,17 @@ stages:
     outs:
       - data/processed/models
       - data/processed/matrices
-      - data/processed/final
+
 
   prediction:
     cmd: python src/models/model1/predict.py "machine learning" > data/processed/predictions.json
     deps:
       - src/models/model1/predict.py
+      - src/models/model1/model.py
+      - src/entity/config_entity.py
+      - src/entity/artifact_entity.py
       - data/processed/models
       - data/processed/matrices
-      - data/processed/final
       - data/interim/modified_books.csv
       - data/interim/modified_papers.csv
     outs:

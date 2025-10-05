@@ -51,7 +51,3 @@ class ModelTrainerConfig:
     book_tfidf_matrix_filepath: str = os.path.join(matrices_dir, BOOK_TFIDF_MATRIX)
     paper_tfidf_matrix_filepath: str = os.path.join(matrices_dir, PAPER_TFIDF_MATRIX)
 
-    # final CSV outputs go to final_dir
-    books_final_filepath: str = os.path.join(final_dir, BOOKS_FINAL_FILE)
-    papers_final_filepath: str = os.path.join(final_dir, PAPERS_FINAL_FILE)
-
