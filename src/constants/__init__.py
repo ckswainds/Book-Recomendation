@@ -32,3 +32,7 @@ BOOK_TF_IDF_MODEL:str="book_tfidf_vectorizer.pkl"
 PAPER_TF_IDF_MODEL:str="paper_tfidf_vectorizer.pkl"
 BOOK_TFIDF_MATRIX:str="book_tfidf_matrix.npz"
 PAPER_TFIDF_MATRIX:str="paper_tfidf_matrix.npz"
+
+
+APP_HOST = "0.0.0.0"
+APP_PORT = 5000

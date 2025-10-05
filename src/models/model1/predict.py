@@ -93,7 +93,7 @@ class RecommenderPredictor:
             result = {
                 "query": self.query,
                 "top_books": top_books_df[["title", "authors","description","publisher","publishedDate","avgrating"]].to_dict(orient="records"),
-                "top_papers": top_papers_df[["Title","Abstract","Authors","Year","Citations"]].to_dict(orient="records"),
+                "top_papers": top_papers_df[["Title","Authors","Year","Citations"]].to_dict(orient="records"),
             }
 
             logger.info("Prediction successful for query: %s", self.query)

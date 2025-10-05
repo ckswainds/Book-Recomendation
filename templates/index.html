@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Book & Research Paper Recommender</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/static/favicon.ico" />
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-6xl mx-auto p-6">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-indigo-700 mb-2">
+        AI Book & Research Paper Recommender
+      </h1>
+      <p class="text-gray-600">Find top-rated books and research papers tailored to your query</p>
+    </header>
+
+    <!-- Search Form -->
+    <form method="post" action="/predict" class="bg-white p-6 rounded-2xl shadow-md mb-10">
+      <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-4 items-center">
+        <input type="text" name="query" placeholder="Enter your topic (e.g., NLP, ML, AI)"
+          class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 w-full" required>
+        <input type="number" name="top_n_books" placeholder="Top N Books" min="1" value="5"
+          class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 w-full" required>
+        <input type="number" name="top_n_papers" placeholder="Top N Papers" min="1" value="5"
+          class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 w-full" required>
+      </div>
+      <div class="text-center mt-6">
+        <button type="submit"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition">
+          Recommend
+        </button>
+      </div>
+    </form>
+
+    {% if result %}
+    <!-- Results Section -->
+    <section>
+      <!-- Query -->
+      <h2 class="text-2xl font-semibold text-indigo-700 mb-4">
+        Recommendations for: <span class="text-gray-800">{{ result.query }}</span>
+      </h2>
+
+      <!-- Books Section -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold text-gray-800 mb-3 border-b-2 border-indigo-500 inline-block">📚 Top Books</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for book in result.top_books %}
+          <div class="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition fade-in">
+            <h4 class="text-lg font-semibold text-indigo-700">{{ book.title | default("Unknown Title") }}</h4>
+            <p class="text-sm text-gray-600 mt-1"><b>Author(s):</b> {{ book.authors | default("Unknown") }}</p>
+            <p class="text-sm text-gray-600"><b>Publisher:</b> {{ book.publisher | default("Unknown") }}</p>
+            <p class="text-sm text-gray-600"><b>Published:</b> {{ book.publishedDate | default("Unknown") }}</p>
+            <p class="text-sm text-gray-600"><b>Rating:</b> {{ book.avgrating | default("N/A") }}</p>
+            <p class="text-gray-700 mt-2 line-clamp-4">{{ book.description | default("No description available") }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Papers Section -->
+      <div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 border-b-2 border-indigo-500 inline-block">🧠 Top Research Papers</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for paper in result.top_papers %}
+          <div class="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition fade-in">
+            <h4 class="text-lg font-semibold text-indigo-700">{{ paper.Title | default("Unknown Title") }}</h4>
+            <p class="text-sm text-gray-600 mt-1"><b>Authors:</b> {{ paper.Authors | default("Unknown") }}</p>
+            <p class="text-sm text-gray-600"><b>Year:</b> {{ paper.Year | default("Unknown") }}</p>
+            <p class="text-sm text-gray-600"><b>Citations:</b> {{ paper.Citations | default("0") }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer class="text-center mt-10 text-gray-500 text-sm">
+      <p>Developed with ❤️ using FastAPI & ML | © 2025 AI Recommender</p>
+    </footer>
+  </div>
+</body>
+</html>
