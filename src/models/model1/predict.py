@@ -1,156 +1,123 @@
-"""
-Simple, professional prediction module.
-
-Input: query string
-Output: JSON-serializable dict with top 3 books and top 2 papers:
-  {"top_books": [...3 items...], "top_papers": [...2 items...]}
-
-This module loads TF-IDF vectorizers and matrices saved by the trainer,
-loads the final CSVs with metadata, computes cosine similarity and returns
-the requested top-K results.
-"""
 import os
-import sys
 import json
 import joblib
-import numpy as np
-import pandas as pd
 import scipy.sparse as sp
+import pandas as pd
 
 from sklearn.metrics.pairwise import cosine_similarity
-
 from logger import get_logger
-from entity.config_entity import ModelTrainerConfig
+from constants import *
 from exception import ModelTrainingError
+from entity.artifact_entity import BuildFeaturesArifact
+from entity.config_entity import ModelTrainerConfig
 
 logger = get_logger(log_filename="predict.log")
 
 
-class SimplePredictor:
+class RecommenderPredictor:
     """
-    Lightweight predictor for returning top-N recommendations.
-
-    Args:
-        cfg (ModelTrainerConfig | None): optional config; defaults to ModelTrainerConfig()
+    RecommenderPredictor loads trained TF-IDF models and matrices,
+    computes similarity scores for a given query, and returns top-N
+    recommendations as JSON for books and papers.
     """
 
-    def __init__(self, cfg: ModelTrainerConfig | None = None):
-        self.cfg = cfg if cfg is not None else ModelTrainerConfig()
-        self.book_vec = None
-        self.book_mat = None
-        self.paper_vec = None
-        self.paper_mat = None
-        logger.info("SimplePredictor initialized with config: %s", getattr(self.cfg, "__dict__", str(self.cfg)))
+    def __init__(self, query: str, build_feature_artifact: BuildFeaturesArifact, model_trainer_config: ModelTrainerConfig):
+        self.query = query
+        self.build_feature_artifact = build_feature_artifact
+        self.model_trainer_config = model_trainer_config
+        logger.info("Initialized RecommenderPredictor for query: %s", query)
 
-    def _ensure_artifacts(self):
-        """Load vectorizers and matrices from disk; raise ModelTrainingError if missing."""
-        # books
-        if self.book_vec is None or self.book_mat is None:
-            if not (os.path.exists(self.cfg.book_tfidf_model_filepath) and os.path.exists(self.cfg.book_tfidf_matrix_filepath)):
-                msg = "Book TF-IDF artifacts missing"
-                logger.error("%s: %s, %s", msg, self.cfg.book_tfidf_model_filepath, self.cfg.book_tfidf_matrix_filepath)
-                raise ModelTrainingError(msg)
-            logger.debug("Loading book TF-IDF artifacts")
-            self.book_vec = joblib.load(self.cfg.book_tfidf_model_filepath)
-            self.book_mat = sp.load_npz(self.cfg.book_tfidf_matrix_filepath)
-
-        # papers
-        if self.paper_vec is None or self.paper_mat is None:
-            if not (os.path.exists(self.cfg.paper_tfidf_model_filepath) and os.path.exists(self.cfg.paper_tfidf_matrix_filepath)):
-                msg = "Paper TF-IDF artifacts missing"
-                logger.error("%s: %s, %s", msg, self.cfg.paper_tfidf_model_filepath, self.cfg.paper_tfidf_matrix_filepath)
-                raise ModelTrainingError(msg)
-            logger.debug("Loading paper TF-IDF artifacts")
-            self.paper_vec = joblib.load(self.cfg.paper_tfidf_model_filepath)
-            self.paper_mat = sp.load_npz(self.cfg.paper_tfidf_matrix_filepath)
-
-    def _load_metadata(self):
-        """Load final CSVs with metadata; raise ModelTrainingError if missing."""
-        if not os.path.exists(self.cfg.books_final_filepath) or not os.path.exists(self.cfg.papers_final_filepath):
-            msg = "Final CSVs missing"
-            logger.error("%s: %s, %s", msg, self.cfg.books_final_filepath, self.cfg.papers_final_filepath)
-            raise ModelTrainingError(msg)
-        logger.debug("Loading final metadata CSVs")
-        df_books = pd.read_csv(self.cfg.books_final_filepath)
-        df_papers = pd.read_csv(self.cfg.papers_final_filepath)
-        return df_books, df_papers
-
-    @staticmethod
-    def _top_k_from_sims(sims: np.ndarray, df: pd.DataFrame, k: int):
-        """Return top-k items as list of small dicts (safe for JSON)."""
-        if sims is None or sims.size == 0:
-            return []
-        idx = np.argsort(-sims)[:k]
-        results = []
-        for i in idx:
-            if i < 0 or i >= len(df):
-                continue
-            row = df.iloc[int(i)]
-            results.append({
-                "title": str(row.get("title", "") or row.get("Title", "")),
-                "authors": str(row.get("authors", "") or row.get("Authors", "")),
-                "year": str(row.get("publishedDate", "") or row.get("Year", "")),
-                "sim_score": float(sims[int(i)]) if not np.isnan(sims[int(i)]) else None,
-                "final_score": float(row.get("final_score")) if ("final_score" in row and not pd.isna(row.get("final_score"))) else None,
-                "url": str(row.get("previewLink", "") or row.get("URL", "")),
-            })
-        return results
-
-    def predict(self, query: str, top_books: int = 3, top_papers: int = 2) -> dict:
-        """
-        Predict top books and papers for the given query.
-
-        Args:
-            query: user query
-            top_books: number of top books to return (default 3)
-            top_papers: number of top papers to return (default 2)
-
-        Returns:
-            dict with keys "top_books" and "top_papers" (lists of dicts)
-        """
+    def _load_artifacts(self):
+        """Load TF-IDF vectorizers, matrices, and datasets."""
         try:
-            logger.info("Predict called with query: %s", query)
-            self._ensure_artifacts()
-            df_books, df_papers = self._load_metadata()
+            logger.info("Loading TF-IDF vectorizers and matrices from disk")
+            # Load trained vectorizers & matrices
+            book_tfidf_vectorizer = joblib.load(self.model_trainer_config.book_tfidf_model_filepath)
+            paper_tfidf_vectorizer = joblib.load(self.model_trainer_config.paper_tfidf_model_filepath)
 
-            # compute similarities
-            book_qv = self.book_vec.transform([query])
-            paper_qv = self.paper_vec.transform([query])
-            book_sims = cosine_similarity(book_qv, self.book_mat).flatten()
-            paper_sims = cosine_similarity(paper_qv, self.paper_mat).flatten()
-            logger.debug("Computed similarity vectors (books=%d, papers=%d)", book_sims.size, paper_sims.size)
+            book_tfidf_matrix = sp.load_npz(self.model_trainer_config.book_tfidf_matrix_filepath)
+            paper_tfidf_matrix = sp.load_npz(self.model_trainer_config.paper_tfidf_matrix_filepath)
 
-            top_books_list = self._top_k_from_sims(book_sims, df_books, top_books)
-            top_papers_list = self._top_k_from_sims(paper_sims, df_papers, top_papers)
+            # Load processed data
+            df_books = pd.read_csv(self.build_feature_artifact.modified_books_data_filepath)
+            df_paper = pd.read_csv(self.build_feature_artifact.modified_papers_data_filepath)
 
-            result = {"top_books": top_books_list, "top_papers": top_papers_list}
-            logger.info("Prediction finished, returning %d books and %d papers", len(top_books_list), len(top_papers_list))
-            return result
-        except ModelTrainingError:
-            raise
+            return book_tfidf_vectorizer, book_tfidf_matrix, paper_tfidf_vectorizer, paper_tfidf_matrix, df_books, df_paper
+        except Exception as e:
+            logger.exception("Error loading artifacts: %s", e)
+            raise ModelTrainingError("Failed to load artifacts") from e
+
+    def _compute_similarity(self, query, tfidf_vectorizer, tfidf_matrix):
+        """Compute cosine similarity for a query."""
+        qv = tfidf_vectorizer.transform([query])
+        sims = cosine_similarity(qv, tfidf_matrix).flatten()
+        return sims
+
+    def predict(self, top_books: int = 3, top_papers: int = 2):
+        """Return top-N book and paper recommendations as JSON."""
+        try:
+            (
+                book_tfidf_vectorizer,
+                book_tfidf_matrix,
+                paper_tfidf_vectorizer,
+                paper_tfidf_matrix,
+                df_books,
+                df_paper,
+            ) = self._load_artifacts()
+
+            # Compute similarities
+            book_sims = self._compute_similarity(self.query, book_tfidf_vectorizer, book_tfidf_matrix)
+            paper_sims = self._compute_similarity(self.query, paper_tfidf_vectorizer, paper_tfidf_matrix)
+
+            # Final score same as training logic
+            df_books["sim_score"] = book_sims
+            df_books["final_score"] = (
+                0.55 * df_books.get("sim_score", 0)
+                + 0.25 * df_books.get("rating_score", 0)
+                + 0.15 * df_books.get("recency_score", 0)
+                + 0.05 * df_books.get("page_score", 0)
+            )
+
+            df_paper["sim_score"] = paper_sims
+            df_paper["final_score"] = (
+                0.60 * df_paper.get("sim_score", 0)
+                + 0.30 * df_paper.get("citations_score", 0)
+                + 0.10 * df_paper.get("recency_score", 0)
+            )
+
+            # Select top recommendations
+            top_books_df = df_books.sort_values("final_score", ascending=False).head(top_books)
+            top_papers_df = df_paper.sort_values("final_score", ascending=False).head(top_papers)
+
+            # Convert to JSON
+            result = {
+                "query": self.query,
+                "top_books": top_books_df[["title", "authors","description","publisher","publishedDate","avgrating"]].to_dict(orient="records"),
+                "top_papers": top_papers_df[["Title","Abstract","Authors","Year","Citations"]].to_dict(orient="records"),
+            }
+
+            logger.info("Prediction successful for query: %s", self.query)
+            return json.dumps(result, indent=4)
+
         except Exception as e:
             logger.exception("Prediction failed: %s", e)
             raise ModelTrainingError("Prediction pipeline failed") from e
 
 
 def main():
-    """
-    CLI test: python predict.py "your query here"
-    Prints JSON with top 3 books and top 2 papers.
-    """
-    try:
-        query = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "machine learning neural networks"
-        predictor = SimplePredictor()
-        output = predictor.predict(query, top_books=3, top_papers=2)
-        print(json.dumps(output, indent=2))
-    except ModelTrainingError as e:
-        logger.error("ModelTrainingError in predict main: %s", e)
-        print("Prediction failed:", e)
-        sys.exit(2)
-    except Exception as e:
-        logger.exception("Unexpected error in predict main: %s", e)
-        print("Unexpected error:", e)
-        sys.exit(3)
+    """Quick test for prediction."""
+    query = "deep learning for image recognition"
+
+    build_feat_artifact = BuildFeaturesArifact(
+        modified_books_data_filepath="data/interim/modified_books.csv",
+        modified_papers_data_filepath="data/interim/modified_papers.csv",
+    )
+    trainer_cfg = ModelTrainerConfig()
+
+    predictor = RecommenderPredictor(query, build_feat_artifact, trainer_cfg)
+    output_json = predictor.predict(top_books=3, top_papers=2)
+
+    print(output_json)
 
 
 if __name__ == "__main__":

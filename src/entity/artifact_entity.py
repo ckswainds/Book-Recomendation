@@ -35,8 +35,5 @@ class ModelTrainerArtifact:
     book_tfidf_matrix_filepath: str
     paper_tfidf_matrix_filepath: str
 
-    # Final CSV outputs produced by the trainer/post-processing
-    books_final_filepath: str
-    papers_final_filepath: str
 
 
