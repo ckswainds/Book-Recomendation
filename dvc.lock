@@ -151,10 +151,10 @@ stages:
       size: 6878
     - path: src/models/model1/predict.py
       hash: md5
-      md5: 980fc90a20576db714586f97d1c3f028
-      size: 5232
+      md5: cebc175a01f6ac5cb7a5466a0f22fc13
+      size: 5241
     outs:
     - path: data/processed/predictions.json
       hash: md5
-      md5: 578a0ee0ef319bf7f3e9ec4dba9108b2
-      size: 10458
+      md5: e89b265e7fb96398305eb8ef297907c4
+      size: 9772

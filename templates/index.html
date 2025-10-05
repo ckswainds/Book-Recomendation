@@ -51,7 +51,13 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {% for book in result.top_books %}
           <div class="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition fade-in">
-            <h4 class="text-lg font-semibold text-indigo-700">{{ book.title | default("Unknown Title") }}</h4>
+            <h4 class="text-lg font-semibold text-indigo-700">
+              {% if book.previewLink %}
+                <a href="{{ book.previewLink }}" target="_blank">{{ book.title | default("Unknown Title") }}</a>
+              {% else %}
+                {{ book.title | default("Unknown Title") }}
+              {% endif %}
+            </h4>
             <p class="text-sm text-gray-600 mt-1"><b>Author(s):</b> {{ book.authors | default("Unknown") }}</p>
             <p class="text-sm text-gray-600"><b>Publisher:</b> {{ book.publisher | default("Unknown") }}</p>
             <p class="text-sm text-gray-600"><b>Published:</b> {{ book.publishedDate | default("Unknown") }}</p>
@@ -68,7 +74,13 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {% for paper in result.top_papers %}
           <div class="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition fade-in">
-            <h4 class="text-lg font-semibold text-indigo-700">{{ paper.Title | default("Unknown Title") }}</h4>
+            <h4 class="text-lg font-semibold text-indigo-700">
+              {% if paper.URL %}
+                <a href="{{ paper.URL }}" target="_blank">{{ paper.Title | default("Unknown Title") }}</a>
+              {% else %}
+                {{ paper.Title | default("Unknown Title") }}
+              {% endif %}
+            </h4>
             <p class="text-sm text-gray-600 mt-1"><b>Authors:</b> {{ paper.Authors | default("Unknown") }}</p>
             <p class="text-sm text-gray-600"><b>Year:</b> {{ paper.Year | default("Unknown") }}</p>
             <p class="text-sm text-gray-600"><b>Citations:</b> {{ paper.Citations | default("0") }}</p>
