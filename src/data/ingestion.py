@@ -8,6 +8,11 @@ import json
 from typing import List, Union, Any
 import time
 import os
+import yaml
+
+
+
+
 
 
 logger = get_logger(log_filename="data_ingestion.log")
@@ -131,18 +136,19 @@ class DataIngestion:
         """
         try:
             logger.info("Starting data ingestion process...")
-            queries = [
-                "machine learning",
-                "deep learning",
-                "artificial intelligence",
-                "natural language processing",
-                "nlp",
-                "computer vision",
-                "reinforcement learning",
-                "data science"
-            ]
-            all_books = self.load_books_data(queries)
-            all_papers = self.load_papers_data(queries)
+            
+            with open("configs/book_topics.yaml", "r") as f:
+                book_topics = yaml.safe_load(f)["book_topics"]
+                
+            with open("configs/paper_topics.yaml", "r") as f:
+                paper_topics = yaml.safe_load(f)["paper_topics"]
+            
+            keywords_books = [kw for topic in book_topics for kw in topic["keywords"]]
+            keywords_papers = [kw for topic in paper_topics for kw in topic["keywords"]]
+            
+            
+            all_books = self.load_books_data(book_topics)
+            all_papers = self.load_papers_data(paper_topics)
 
             data_ingestion_dir = os.path.dirname(self.data_ingestion_config.ingested_books_data_filepath)
             os.makedirs(data_ingestion_dir, exist_ok=True)

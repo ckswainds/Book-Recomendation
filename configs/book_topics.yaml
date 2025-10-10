@@ -1,0 +1,120 @@
+book_topics:
+  - topic: "Machine Learning"
+    keywords:
+      - "machine learning"
+      - "supervised learning"
+      - "unsupervised learning"
+      - "reinforcement learning"
+      - "model training"
+      - "feature engineering"
+
+  - topic: "Deep Learning"
+    keywords:
+      - "deep learning"
+      - "neural networks"
+      - "cnn"
+      - "rnn"
+      - "transformers"
+      - "backpropagation"
+
+  - topic: "Natural Language Processing"
+    keywords:
+      - "nlp"
+      - "text processing"
+      - "language models"
+      - "bert"
+      - "gpt"
+      - "tokenization"
+
+  - topic: "Computer Vision"
+    keywords:
+      - "image processing"
+      - "object detection"
+      - "image classification"
+      - "opencv"
+      - "cnn"
+      - "vision transformer"
+
+  - topic: "Data Science"
+    keywords:
+      - "data analysis"
+      - "data visualization"
+      - "statistics"
+      - "pandas"
+      - "numpy"
+      - "matplotlib"
+
+  - topic: "Artificial Intelligence"
+    keywords:
+      - "ai"
+      - "intelligent systems"
+      - "expert systems"
+      - "search algorithms"
+      - "knowledge representation"
+
+  - topic: "Digital Electronics"
+    keywords:
+      - "logic gates"
+      - "flip flops"
+      - "sequential circuits"
+      - "combinational circuits"
+      - "boolean algebra"
+      - "digital systems"
+
+  - topic: "Analog Electronics"
+    keywords:
+      - "operational amplifier"
+      - "transistor amplifier"
+      - "diode circuits"
+      - "filters"
+      - "oscillators"
+      - "bjt"
+      - "fet"
+
+  - topic: "Communication Systems"
+    keywords:
+      - "modulation"
+      - "demodulation"
+      - "am"
+      - "fm"
+      - "pm"
+      - "digital communication"
+      - "error correction"
+      - "signal transmission"
+
+  - topic: "Signal Processing"
+    keywords:
+      - "digital signal processing"
+      - "fourier transform"
+      - "convolution"
+      - "filter design"
+      - "sampling"
+      - "dsp applications"
+
+  - topic: "VLSI Design"
+    keywords:
+      - "vlsi"
+      - "verilog"
+      - "hdl"
+      - "fpga"
+      - "asic"
+      - "layout design"
+      - "mosfet circuits"
+
+  - topic: "Embedded Systems"
+    keywords:
+      - "microcontroller"
+      - "arduino"
+      - "raspberry pi"
+      - "real-time systems"
+      - "firmware"
+      - "sensor interfacing"
+
+  - topic: "Control Systems"
+    keywords:
+      - "transfer function"
+      - "pid controller"
+      - "stability analysis"
+      - "bode plot"
+      - "state space"
+      - "feedback systems"
