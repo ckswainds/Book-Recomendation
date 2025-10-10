@@ -1,0 +1,87 @@
+paper_topics:
+  - topic: "Machine Learning"
+    keywords:
+      - "classification"
+      - "regression"
+      - "svm"
+      - "random forest"
+      - "k-means"
+      - "decision tree"
+
+  - topic: "Deep Learning"
+    keywords:
+      - "cnn"
+      - "rnn"
+      - "lstm"
+      - "gan"
+      - "autoencoder"
+      - "transformer"
+
+  - topic: "Natural Language Processing"
+    keywords:
+      - "word embeddings"
+      - "attention mechanism"
+      - "language modeling"
+      - "text classification"
+      - "machine translation"
+      - "sentiment analysis"
+
+  - topic: "Computer Vision"
+    keywords:
+      - "object detection"
+      - "segmentation"
+      - "image recognition"
+      - "pose estimation"
+      - "vision transformer"
+
+  - topic: "Signal Processing"
+    keywords:
+      - "dsp"
+      - "fourier transform"
+      - "wavelet transform"
+      - "filter banks"
+      - "speech signal"
+      - "image signal processing"
+
+  - topic: "VLSI and Microelectronics"
+    keywords:
+      - "vlsi design"
+      - "verilog"
+      - "fpga"
+      - "asic design"
+      - "low power circuits"
+      - "semiconductor devices"
+
+  - topic: "Communication Systems"
+    keywords:
+      - "5g"
+      - "wireless communication"
+      - "mimo"
+      - "modulation techniques"
+      - "ofdm"
+      - "error correction codes"
+
+  - topic: "Embedded and IoT Systems"
+    keywords:
+      - "embedded system"
+      - "microcontroller"
+      - "real time operating system"
+      - "iot"
+      - "edge computing"
+      - "sensor networks"
+
+  - topic: "Control Systems"
+    keywords:
+      - "pid controller"
+      - "system modeling"
+      - "state feedback"
+      - "nonlinear control"
+      - "adaptive control"
+
+  - topic: "Robotics and Automation"
+    keywords:
+      - "robotics"
+      - "path planning"
+      - "motion control"
+      - "sensors and actuators"
+      - "autonomous systems"

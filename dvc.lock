@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/data/ingestion.py
       hash: md5
-      md5: c42ab7beb1ed5981dd433951b1dbfebc
-      size: 7713
+      md5: 8006683fa7d4cad3a45b228be9492a7f
+      size: 7912
     - path: src/entity/artifact_entity.py
       hash: md5
       md5: f0cd85d854fbe1503bbab763ec1c6865
@@ -18,8 +18,8 @@ stages:
     outs:
     - path: data/external
       hash: md5
-      md5: cb774166510e43f393fc42712b9ab47e.dir
-      size: 9404547
+      md5: 66e9eff74b0ad193513152514ab76867.dir
+      size: 3953672
       nfiles: 2
   data_cleaning:
     cmd: python src/data/cleaning.py
