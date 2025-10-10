@@ -1,8 +1,25 @@
 Book_recomendation
 ==============================
 
-The purpose of this project is to **create a comprehensive dataset of research papers and books** in the fields of **Machine Learning (ML), Deep Learning (DL), Artificial Intelligence (AI), Natural Language Processing (NLP), Data Science, and related areas**.
+# AI Book & Research Paper Recommender
 
+![Project Banner](https://img.shields.io/badge/ML-Content--Based-blue) ![Python](https://img.shields.io/badge/Python-3.11-green) ![FastAPI](https://img.shields.io/badge/FastAPI-API-red)
+
+A **Machine Learning-powered content-based recommendation system** that suggests top books and research papers based on user queries. The system fetches data from **Google Books API** and **Semantic Scholar API**, processes it, and provides ranked recommendations.
+
+---
+
+## 🔍 Features
+
+- Recommend **top N books** and **top N research papers** for any AI, ML, NLP, or Electronics-related topic.
+- Uses **TF-IDF-based content similarity** for content-based ranking.
+- Considers multiple metadata features:
+  - **Books:** Title, Authors, Publisher, Published Date, Average Rating, Preview Link
+  - **Papers:** Title, Authors, Year, Citations, URL
+- Built with **FastAPI** + **TailwindCSS** front-end for a responsive web interface.
+- Fully reproducible pipeline for **data ingestion, preprocessing, feature building, and model training**.
+
+---
 Project Organization
 ------------
 
