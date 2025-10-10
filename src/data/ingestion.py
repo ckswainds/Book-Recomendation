@@ -147,8 +147,8 @@ class DataIngestion:
             keywords_papers = [kw for topic in paper_topics for kw in topic["keywords"]]
             
             
-            all_books = self.load_books_data(book_topics)
-            all_papers = self.load_papers_data(paper_topics)
+            all_books = self.load_books_data(keywords_books)
+            all_papers = self.load_papers_data(keywords_papers)
 
             data_ingestion_dir = os.path.dirname(self.data_ingestion_config.ingested_books_data_filepath)
             os.makedirs(data_ingestion_dir, exist_ok=True)

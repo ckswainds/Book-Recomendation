@@ -7,6 +7,7 @@ from entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact
 from entity.config_entity import DataCleaningConfig
 from logger import get_logger
 import pandas as pd
+import yaml
 
 logger = get_logger(log_filename="cleaning.log")
 
@@ -76,20 +77,11 @@ class Cleaning:
             logger.info("Loading books data from %s", self.data_ingestion_artifact.ingested_books_data_filepath)
             with open(self.data_ingestion_artifact.ingested_books_data_filepath, "r", encoding="utf-8") as f:
                 all_books = json.load(f)
-
-            ml_keywords = [
-                "machine learning",
-                "deep learning",
-                "artificial intelligence",
-                "natural language processing",
-                "nlp",
-                "data science",
-                "computer vision",
-                "reinforcement learning",
-                "ml algorithms",
-                "ai research",
-                "neural networks"
-            ]
+            
+            with open("configs/book_topics.yaml", "r") as f:
+                book_topics = yaml.safe_load(f)["book_topics"]
+            
+            ml_keywords = [kw for topic in book_topics for kw in topic["keywords"]]
 
             filtered_books = []
             for item in all_books:

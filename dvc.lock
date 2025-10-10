@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/data/ingestion.py
       hash: md5
-      md5: 8006683fa7d4cad3a45b228be9492a7f
-      size: 7912
+      md5: c0fcc1875a2fbf8c395728edbdec1297
+      size: 7918
     - path: src/entity/artifact_entity.py
       hash: md5
       md5: f0cd85d854fbe1503bbab763ec1c6865
@@ -18,16 +18,16 @@ stages:
     outs:
     - path: data/external
       hash: md5
-      md5: 951f18c3e3b09a7f8c122b67abbc8dc6.dir
-      size: 3292096
+      md5: a52b4034399dc3aa3edd444bb21d0dc0.dir
+      size: 56348179
       nfiles: 2
   data_cleaning:
     cmd: python src/data/cleaning.py
     deps:
     - path: src/data/cleaning.py
       hash: md5
-      md5: fb76da5e7ad3107cc25e54037034c79a
-      size: 7628
+      md5: c19d32e63a9aa8c01924b41e19e8b1f5
+      size: 7434
     - path: src/entity/artifact_entity.py
       hash: md5
       md5: f0cd85d854fbe1503bbab763ec1c6865
@@ -39,23 +39,23 @@ stages:
     outs:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: fb130ff0fbe13f41e8362e17dc0c63bb
-      size: 391077
+      md5: 7cfe2b50ffdf9f2de8408e7956dd9265
+      size: 8860966
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 256ed7ea3363af41e320ecefa4e84178
-      size: 305086
+      md5: 093d0d57b3cdcdf13c8854c376a6f8a0
+      size: 4068338
   build_features:
     cmd: python src/data/build_features.py
     deps:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: fb130ff0fbe13f41e8362e17dc0c63bb
-      size: 391077
+      md5: 7cfe2b50ffdf9f2de8408e7956dd9265
+      size: 8860966
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 256ed7ea3363af41e320ecefa4e84178
-      size: 305086
+      md5: 093d0d57b3cdcdf13c8854c376a6f8a0
+      size: 4068338
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -71,23 +71,23 @@ stages:
     outs:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 5da8dafb6ab085b0781388f5a915ad65
-      size: 720919
+      md5: a18b36a999136092b342db84cc2de437
+      size: 16594193
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: ae1838c8d5cd743e2ea8c496db18f035
-      size: 568754
+      md5: a62cd589d1ea2e74a63dfa74d881d0c7
+      size: 7654948
   model_trainer:
     cmd: python src/models/model1/model.py
     deps:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 5da8dafb6ab085b0781388f5a915ad65
-      size: 720919
+      md5: a18b36a999136092b342db84cc2de437
+      size: 16594193
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: ae1838c8d5cd743e2ea8c496db18f035
-      size: 568754
+      md5: a62cd589d1ea2e74a63dfa74d881d0c7
+      size: 7654948
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -107,13 +107,13 @@ stages:
     outs:
     - path: data/processed/matrices
       hash: md5
-      md5: 94547900660fc013d3a57eea354f0c5e.dir
-      size: 214088
+      md5: 688d11a4756bc652991eaf4ed8b6a45c.dir
+      size: 4940225
       nfiles: 2
     - path: data/processed/models
       hash: md5
-      md5: 5a6cec9f72fe90c4f1823eade2f147eb.dir
-      size: 380245
+      md5: ebf13fe3037ad45a060180deeceed521.dir
+      size: 377116
       nfiles: 2
   prediction:
     cmd: python src/models/model1/predict.py "machine learning" > 
@@ -121,21 +121,21 @@ stages:
     deps:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 5da8dafb6ab085b0781388f5a915ad65
-      size: 720919
+      md5: a18b36a999136092b342db84cc2de437
+      size: 16594193
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: ae1838c8d5cd743e2ea8c496db18f035
-      size: 568754
+      md5: a62cd589d1ea2e74a63dfa74d881d0c7
+      size: 7654948
     - path: data/processed/matrices
       hash: md5
-      md5: 94547900660fc013d3a57eea354f0c5e.dir
-      size: 214088
+      md5: 688d11a4756bc652991eaf4ed8b6a45c.dir
+      size: 4940225
       nfiles: 2
     - path: data/processed/models
       hash: md5
-      md5: 5a6cec9f72fe90c4f1823eade2f147eb.dir
-      size: 380245
+      md5: ebf13fe3037ad45a060180deeceed521.dir
+      size: 377116
       nfiles: 2
     - path: src/entity/artifact_entity.py
       hash: md5
@@ -156,5 +156,5 @@ stages:
     outs:
     - path: data/processed/predictions.json
       hash: md5
-      md5: 49186d746a29da1ae9ec776ba3637c01
-      size: 8983
+      md5: e5f1ed42dfdeee98a15b047d63cdb5ca
+      size: 8984
