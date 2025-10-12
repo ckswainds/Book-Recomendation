@@ -2,8 +2,6 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from src.constants import APP_HOST, APP_PORT
-from uvicorn import run as app_run
 from src.entity.artifact_entity import BuildFeaturesArifact
 from src.entity.config_entity import ModelTrainerConfig
 from src.models.model1.predict import RecommenderPredictor
@@ -11,7 +9,8 @@ from src.logger import get_logger
 import json
 import ast
 
-app = FastAPI()
+# The application instance must be named 'app' for the Docker CMD to find it: app:app
+app = FastAPI() 
 logger = get_logger(log_filename="app.log")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -20,6 +19,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+    """Handles the root path, serving the main index.html template."""
     return templates.TemplateResponse("index.html", {"request": request})
 
 
@@ -30,6 +30,10 @@ async def predict(
     top_n_books: int = Form(3),
     top_n_papers: int = Form(2),
 ):
+    """
+    Handles the prediction request from the user form. 
+    It takes a query and returns book and paper recommendations.
+    """
     build_feat_artifact = BuildFeaturesArifact(
         modified_books_data_filepath="data/interim/modified_books.csv",
         modified_papers_data_filepath="data/interim/modified_papers.csv",
@@ -47,7 +51,7 @@ async def predict(
             try:
                 output_obj = json.loads(output_json)
             except json.JSONDecodeError:
-               
+                
                 try:
                     output_obj = ast.literal_eval(output_json)
                 except Exception as e:
@@ -75,7 +79,3 @@ async def predict(
         )
 
     return templates.TemplateResponse("index.html", {"request": request, "result": result})
-
-
-if __name__ == "__main__":
-    app_run(app, host=APP_HOST, port=APP_PORT)
