@@ -10,11 +10,6 @@ import time
 import os
 import yaml
 
-
-
-
-
-
 logger = get_logger(log_filename="data_ingestion.log")
 
 API_KEY=os.getenv(GOOGLE_BOOKS_API)
