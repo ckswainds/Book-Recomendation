@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/data/ingestion.py
       hash: md5
-      md5: c0fcc1875a2fbf8c395728edbdec1297
-      size: 7918
+      md5: fb320eebd2b2181a8690662b03fcb450
+      size: 7908
     - path: src/entity/artifact_entity.py
       hash: md5
       md5: f0cd85d854fbe1503bbab763ec1c6865
@@ -18,8 +18,8 @@ stages:
     outs:
     - path: data/external
       hash: md5
-      md5: a52b4034399dc3aa3edd444bb21d0dc0.dir
-      size: 56348179
+      md5: 9ae40b321d8a654f8e8c1af4ccfbe613.dir
+      size: 53219964
       nfiles: 2
   data_cleaning:
     cmd: python src/data/cleaning.py
@@ -39,23 +39,23 @@ stages:
     outs:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 7cfe2b50ffdf9f2de8408e7956dd9265
-      size: 8860966
+      md5: 3823494fc4e7b200e81d8b61dde996d5
+      size: 8912996
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 093d0d57b3cdcdf13c8854c376a6f8a0
-      size: 4068338
+      md5: 0499e80fcc83212aa3fa178013bf8fd2
+      size: 2615322
   build_features:
     cmd: python src/data/build_features.py
     deps:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 7cfe2b50ffdf9f2de8408e7956dd9265
-      size: 8860966
+      md5: 3823494fc4e7b200e81d8b61dde996d5
+      size: 8912996
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 093d0d57b3cdcdf13c8854c376a6f8a0
-      size: 4068338
+      md5: 0499e80fcc83212aa3fa178013bf8fd2
+      size: 2615322
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -71,23 +71,23 @@ stages:
     outs:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: a18b36a999136092b342db84cc2de437
-      size: 16594193
+      md5: 82690fc69c70cf2a9dcbca50935b7ec8
+      size: 16687625
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: a62cd589d1ea2e74a63dfa74d881d0c7
-      size: 7654948
+      md5: 5abb85274b7163161e53d7820f327a3f
+      size: 4927558
   model_trainer:
     cmd: python src/models/model1/model.py
     deps:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: a18b36a999136092b342db84cc2de437
-      size: 16594193
+      md5: 82690fc69c70cf2a9dcbca50935b7ec8
+      size: 16687625
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: a62cd589d1ea2e74a63dfa74d881d0c7
-      size: 7654948
+      md5: 5abb85274b7163161e53d7820f327a3f
+      size: 4927558
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -107,13 +107,13 @@ stages:
     outs:
     - path: data/processed/matrices
       hash: md5
-      md5: 688d11a4756bc652991eaf4ed8b6a45c.dir
-      size: 4940225
+      md5: 9ae00e466a77b1fad3e972d8d4f49b37.dir
+      size: 4357166
       nfiles: 2
     - path: data/processed/models
       hash: md5
-      md5: ebf13fe3037ad45a060180deeceed521.dir
-      size: 377116
+      md5: 66376b4c4ed427cc4d604b220974f3bd.dir
+      size: 377066
       nfiles: 2
   prediction:
     cmd: python src/models/model1/predict.py "machine learning" > 
@@ -121,21 +121,21 @@ stages:
     deps:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: a18b36a999136092b342db84cc2de437
-      size: 16594193
+      md5: 82690fc69c70cf2a9dcbca50935b7ec8
+      size: 16687625
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: a62cd589d1ea2e74a63dfa74d881d0c7
-      size: 7654948
+      md5: 5abb85274b7163161e53d7820f327a3f
+      size: 4927558
     - path: data/processed/matrices
       hash: md5
-      md5: 688d11a4756bc652991eaf4ed8b6a45c.dir
-      size: 4940225
+      md5: 9ae00e466a77b1fad3e972d8d4f49b37.dir
+      size: 4357166
       nfiles: 2
     - path: data/processed/models
       hash: md5
-      md5: ebf13fe3037ad45a060180deeceed521.dir
-      size: 377116
+      md5: 66376b4c4ed427cc4d604b220974f3bd.dir
+      size: 377066
       nfiles: 2
     - path: src/entity/artifact_entity.py
       hash: md5
@@ -156,5 +156,5 @@ stages:
     outs:
     - path: data/processed/predictions.json
       hash: md5
-      md5: e5f1ed42dfdeee98a15b047d63cdb5ca
-      size: 8984
+      md5: 92cc6c32a58a71c4a217718149107cdd
+      size: 9034
