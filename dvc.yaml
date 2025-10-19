@@ -29,31 +29,51 @@ stages:
     outs:
       - data/interim/modified_books.csv
       - data/interim/modified_papers.csv
-
-  model_trainer:
-    cmd: python src/models/model1/model.py
+  
+  sentence_transformer_model_trainer:
+    cmd: python src/models/model2/train.py
     deps:
-      - src/models/model1/model.py
-      - src/entity/config_entity.py
-      - src/entity/artifact_entity.py
-      - src/data/build_features.py
-      - data/interim/modified_books.csv
-      - data/interim/modified_papers.csv
+        - src/models/model2/model.py
+        - src/entity/config_entity.py
+        - src/entity/artifact_entity.py
+        - src/data/build_features.py
+        - data/interim/modified_books.csv
+        - data/interim/modified_papers.csv
     outs:
-      - data/processed/models
-      - data/processed/matrices
+        - data/processed/matrices
 
 
-  prediction:
-    cmd: python src/models/model1/predict.py "machine learning" > data/processed/predictions.json
-    deps:
-      - src/models/model1/predict.py
-      - src/models/model1/model.py
-      - src/entity/config_entity.py
-      - src/entity/artifact_entity.py
-      - data/processed/models
-      - data/processed/matrices
-      - data/interim/modified_books.csv
-      - data/interim/modified_papers.csv
-    outs:
-      - data/processed/predictions.json
+
+
+
+  # model_trainer:
+  #   cmd: python src/models/model1/model.py
+  #   deps:
+  #     - src/models/model1/model.py
+  #     - src/entity/config_entity.py
+  #     - src/entity/artifact_entity.py
+  #     - src/data/build_features.py
+  #     - data/interim/modified_books.csv
+  #     - data/interim/modified_papers.csv
+  #   outs:
+  #     - data/processed/models
+  #     - data/processed/matrices
+
+
+  # prediction:
+  #   cmd: python src/models/model1/predict.py "machine learning" > data/processed/predictions.json
+  #   deps:
+  #     - src/models/model1/predict.py
+  #     - src/models/model1/model.py
+  #     - src/entity/config_entity.py
+  #     - src/entity/artifact_entity.py
+  #     - data/processed/models
+  #     - data/processed/matrices
+  #     - data/interim/modified_books.csv
+  #     - data/interim/modified_papers.csv
+  #   outs:
+  #     - data/processed/predictions.json
+
+
+ 
+   

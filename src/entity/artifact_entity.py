@@ -34,6 +34,13 @@ class ModelTrainerArtifact:
     paper_tfidf_model_filepath: str
     book_tfidf_matrix_filepath: str
     paper_tfidf_matrix_filepath: str
+    
 
 
 
+@dataclass 
+class ModelArtifact:
+    sentence_transformer_model_path:str
+    sentence_transformer_book_matrix_filepath: str
+    sentence_transformer_paper_matrix_filepath: str
+    

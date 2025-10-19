@@ -50,4 +50,13 @@ class ModelTrainerConfig:
     # matrix filepaths go to matrices_dir
     book_tfidf_matrix_filepath: str = os.path.join(matrices_dir, BOOK_TFIDF_MATRIX)
     paper_tfidf_matrix_filepath: str = os.path.join(matrices_dir, PAPER_TFIDF_MATRIX)
-
+    
+    
+   
+@dataclass
+class ModelConfig:
+    model_trainer_dir: str = os.path.join(MODEL_OUTPUT_DIR, MODEL_OUTPTUT_DATA_FOLDER)
+    matrices_dir: str = os.path.join(model_trainer_dir, "matrices")
+    sentence_transformer_model_path:str=SENTENCE_TRANSFORMER_MODEL_DIR
+    sentence_transformer_book_matrix_filepath: str = os.path.join(matrices_dir, SENTENCE_TRANSFORMER_BOOK_MATRIX)
+    sentence_transformer_paper_matrix_filepath: str = os.path.join(matrices_dir, SENTENCE_TRANSFORMER_PAPER_MATRIX)

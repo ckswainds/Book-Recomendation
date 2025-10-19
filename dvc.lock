@@ -5,21 +5,21 @@ stages:
     deps:
     - path: src/data/ingestion.py
       hash: md5
-      md5: fb320eebd2b2181a8690662b03fcb450
-      size: 7908
+      md5: e56d1a6a01289e21b260c38137a3efa0
+      size: 7906
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: f0cd85d854fbe1503bbab763ec1c6865
-      size: 861
+      md5: 2f89fa0879e70a70ad29455ad285236f
+      size: 1052
     - path: src/entity/config_entity.py
       hash: md5
-      md5: 1dbdce3a16b76343dd2c8aabdc431bb2
-      size: 2309
+      md5: f6a8f6c75c19678005120a8a50ba8e34
+      size: 2815
     outs:
     - path: data/external
       hash: md5
-      md5: 9ae40b321d8a654f8e8c1af4ccfbe613.dir
-      size: 53219964
+      md5: d18836607ca2fa039064683380634f40.dir
+      size: 19428168
       nfiles: 2
   data_cleaning:
     cmd: python src/data/cleaning.py
@@ -30,53 +30,53 @@ stages:
       size: 7434
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: f0cd85d854fbe1503bbab763ec1c6865
-      size: 861
+      md5: 2f89fa0879e70a70ad29455ad285236f
+      size: 1052
     - path: src/entity/config_entity.py
       hash: md5
-      md5: 1dbdce3a16b76343dd2c8aabdc431bb2
-      size: 2309
+      md5: f6a8f6c75c19678005120a8a50ba8e34
+      size: 2815
     outs:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 3823494fc4e7b200e81d8b61dde996d5
-      size: 8912996
+      md5: 26ac8a075623be302f859c2b36ad472b
+      size: 1173539
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 0499e80fcc83212aa3fa178013bf8fd2
-      size: 2615322
+      md5: 41fbd1ae2533d4db2a5b90e59ff81bdd
+      size: 1763492
   build_features:
     cmd: python src/data/build_features.py
     deps:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 3823494fc4e7b200e81d8b61dde996d5
-      size: 8912996
+      md5: 26ac8a075623be302f859c2b36ad472b
+      size: 1173539
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 0499e80fcc83212aa3fa178013bf8fd2
-      size: 2615322
+      md5: 41fbd1ae2533d4db2a5b90e59ff81bdd
+      size: 1763492
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
       size: 14093
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: f0cd85d854fbe1503bbab763ec1c6865
-      size: 861
+      md5: 2f89fa0879e70a70ad29455ad285236f
+      size: 1052
     - path: src/entity/config_entity.py
       hash: md5
-      md5: 1dbdce3a16b76343dd2c8aabdc431bb2
-      size: 2309
+      md5: f6a8f6c75c19678005120a8a50ba8e34
+      size: 2815
     outs:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 82690fc69c70cf2a9dcbca50935b7ec8
-      size: 16687625
+      md5: 33ea012f55eebd926ace79e44b07016b
+      size: 2224638
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: 5abb85274b7163161e53d7820f327a3f
-      size: 4927558
+      md5: de59198d0d6dc6fe0d9b937fd2b5e1d4
+      size: 3301229
   model_trainer:
     cmd: python src/models/model1/model.py
     deps:
@@ -158,3 +158,36 @@ stages:
       hash: md5
       md5: 92cc6c32a58a71c4a217718149107cdd
       size: 9034
+  sentence_transformer_model_trainer:
+    cmd: python src/models/model2/train.py
+    deps:
+    - path: data/interim/modified_books.csv
+      hash: md5
+      md5: 33ea012f55eebd926ace79e44b07016b
+      size: 2224638
+    - path: data/interim/modified_papers.csv
+      hash: md5
+      md5: de59198d0d6dc6fe0d9b937fd2b5e1d4
+      size: 3301229
+    - path: src/data/build_features.py
+      hash: md5
+      md5: 293a333ff16b61080ab3116264ebbbbe
+      size: 14093
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 2f89fa0879e70a70ad29455ad285236f
+      size: 1052
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f6a8f6c75c19678005120a8a50ba8e34
+      size: 2815
+    - path: src/models/model2/model.py
+      hash: md5
+      md5: f9f028aa5a7eb6dace27999c75cf834f
+      size: 9168
+    outs:
+    - path: data/processed/matrices
+      hash: md5
+      md5: 85f00f186b90bcd41d1ccf6186b9b9e9.dir
+      size: 4382464
+      nfiles: 2

@@ -55,7 +55,7 @@ class DataIngestion:
             
             for q in queries:
                 q = f'intitle:"{q}"'
-                for start in range(0, 400, 40):
+                for start in range(0, 80,10):
                     url = f"https://www.googleapis.com/books/v1/volumes?q={q}&maxResults=40&startIndex={start}&key={API_KEY}"
 
                     response = requests.get(url)

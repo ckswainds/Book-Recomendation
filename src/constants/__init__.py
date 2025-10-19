@@ -1,3 +1,4 @@
+import os
 GOOGLE_BOOKS_API="Google_api"
 
 
@@ -33,6 +34,12 @@ PAPER_TF_IDF_MODEL:str="paper_tfidf_vectorizer.pkl"
 BOOK_TFIDF_MATRIX:str="book_tfidf_matrix.npz"
 PAPER_TFIDF_MATRIX:str="paper_tfidf_matrix.npz"
 
+
+#Model constants
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+SENTENCE_TRANSFORMER_MODEL_DIR = os.path.join(ROOT_DIR , "models")
+SENTENCE_TRANSFORMER_BOOK_MATRIX:str="sentence_transformer_book_matrix.npy"
+SENTENCE_TRANSFORMER_PAPER_MATRIX:str="sentence_transformer_paper_matrix.npy"
 
 APP_HOST = "0.0.0.0"
 APP_PORT = 5000
