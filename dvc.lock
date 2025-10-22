@@ -18,8 +18,8 @@ stages:
     outs:
     - path: data/external
       hash: md5
-      md5: d18836607ca2fa039064683380634f40.dir
-      size: 19428168
+      md5: 20d73792309b867204c4783a53f83d5b.dir
+      size: 88779860
       nfiles: 2
   data_cleaning:
     cmd: python src/data/cleaning.py
@@ -39,23 +39,23 @@ stages:
     outs:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 26ac8a075623be302f859c2b36ad472b
-      size: 1173539
+      md5: 01a98a90d0c8c753b83b2e784fc1e80b
+      size: 6165905
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 41fbd1ae2533d4db2a5b90e59ff81bdd
-      size: 1763492
+      md5: 1d0a842dc52aa5f11fd9e0763254478e
+      size: 1132940
   build_features:
     cmd: python src/data/build_features.py
     deps:
     - path: data/raw/Ml_books.csv
       hash: md5
-      md5: 26ac8a075623be302f859c2b36ad472b
-      size: 1173539
+      md5: 01a98a90d0c8c753b83b2e784fc1e80b
+      size: 6165905
     - path: data/raw/all_papers.csv
       hash: md5
-      md5: 41fbd1ae2533d4db2a5b90e59ff81bdd
-      size: 1763492
+      md5: 1d0a842dc52aa5f11fd9e0763254478e
+      size: 1132940
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -71,12 +71,12 @@ stages:
     outs:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 33ea012f55eebd926ace79e44b07016b
-      size: 2224638
+      md5: a0341c3ea1f077339699f0c83e3a7645
+      size: 11564013
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: de59198d0d6dc6fe0d9b937fd2b5e1d4
-      size: 3301229
+      md5: c77963ae773aae0cbfb139c9a50fd83b
+      size: 2119373
   model_trainer:
     cmd: python src/models/model1/model.py
     deps:
@@ -163,12 +163,12 @@ stages:
     deps:
     - path: data/interim/modified_books.csv
       hash: md5
-      md5: 33ea012f55eebd926ace79e44b07016b
-      size: 2224638
+      md5: a0341c3ea1f077339699f0c83e3a7645
+      size: 11564013
     - path: data/interim/modified_papers.csv
       hash: md5
-      md5: de59198d0d6dc6fe0d9b937fd2b5e1d4
-      size: 3301229
+      md5: c77963ae773aae0cbfb139c9a50fd83b
+      size: 2119373
     - path: src/data/build_features.py
       hash: md5
       md5: 293a333ff16b61080ab3116264ebbbbe
@@ -183,11 +183,11 @@ stages:
       size: 2815
     - path: src/models/model2/model.py
       hash: md5
-      md5: f9f028aa5a7eb6dace27999c75cf834f
-      size: 9168
+      md5: 1b479f6e9ffbe1d2008bf2a7dd3c4547
+      size: 9103
     outs:
     - path: data/processed/matrices
       hash: md5
-      md5: 85f00f186b90bcd41d1ccf6186b9b9e9.dir
-      size: 4382464
+      md5: 6b94cce1f43dda64f7c37ddeb974a356.dir
+      size: 11097856
       nfiles: 2
