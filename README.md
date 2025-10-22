@@ -1,6 +1,4 @@
-Here’s your **upgraded and detailed `README.md`**, keeping it **professional**, **clear**, and showing the full scope of your work — including DVC, data versioning, CI/CD readiness, modular ML pipeline, etc.
 
----
 
 # 📚 AI Book & Research Paper Recommender
 
@@ -165,5 +163,3 @@ docker run -p 7860:7860 book_recommendation
 * 🧮 Store embeddings in **vector database** (FAISS / Pinecone).
 
 ---
-
-Would you like me to add a short **LinkedIn post** summary (like a project launch/update post) that highlights your contribution and attracts engagement?
