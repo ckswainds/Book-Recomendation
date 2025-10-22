@@ -12,7 +12,7 @@ A **Machine Learning-powered content-based recommendation system** that suggests
 ## 🔍 Features
 
 - Recommend **top N books** and **top N research papers** for any AI, ML, NLP, or Electronics-related topic.
-- Uses **TF-IDF-based content similarity** for content-based ranking.
+- Uses **Sentence Transformer for embeddings and  content similarity** for content-based ranking.
 - Considers multiple metadata features:
   - **Books:** Title, Authors, Publisher, Published Date, Average Rating, Preview Link
   - **Papers:** Title, Authors, Year, Citations, URL
