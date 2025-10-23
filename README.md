@@ -1,4 +1,12 @@
-
+---
+title: "Book and Paper Recommendation System"
+emoji: 📚
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+app_file: app.py
+pinned: false
+---
 
 # 📚 AI Book & Research Paper Recommender
 
