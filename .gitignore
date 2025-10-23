@@ -37,7 +37,7 @@ local_s3/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
+src/helper.py
 # Unit test / coverage reports
 htmlcov/
 .tox/
