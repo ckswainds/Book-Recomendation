@@ -183,11 +183,11 @@ stages:
       size: 2815
     - path: src/models/model2/model.py
       hash: md5
-      md5: 1b479f6e9ffbe1d2008bf2a7dd3c4547
-      size: 9103
+      md5: bf677ff72881800fbac7331e2c0a7275
+      size: 9382
     outs:
     - path: data/processed/matrices
       hash: md5
-      md5: 6b94cce1f43dda64f7c37ddeb974a356.dir
+      md5: 7c7c9cdf7468875e962e68b31aede541.dir
       size: 11097856
       nfiles: 2
