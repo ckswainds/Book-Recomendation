@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from src.entity.artifact_entity import BuildFeaturesArifact
 from src.entity.config_entity import ModelTrainerConfig
-from src.models.model1.predict import RecommenderPredictor
+# from src.models.model1.predict import RecommenderPredictor
 from src.logger import get_logger
 import json
 import ast
