@@ -7,6 +7,17 @@ sdk: streamlit
 app_file: app.py
 pinned: false
 ---
+<!-- ---
+title: "AI Book & Research Paper Recommender"
+emoji: "📚"
+colorFrom: "indigo"
+colorTo: "purple"
+sdk: "gradio"
+sdk_version: "4.31.0"
+app_file: "app.py"
+pinned: false
+license: "mit"
+--- -->
 
 # 📚 AI Book & Research Paper Recommender
 
