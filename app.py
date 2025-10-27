@@ -4,6 +4,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from src.entity.artifact_entity import BuildFeaturesArifact
 from src.entity.config_entity import ModelTrainerConfig
+import sys, os
+
+# Dynamically add src to Python path no matter where the app runs
+base_dir = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(base_dir, "src")
+if src_path not in sys.path:
+    sys.path.append(src_path)
+
 # from src.models.model1.predict import RecommenderPredictor
 from src.logger import get_logger
 import json
