@@ -8,8 +8,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from src.logger import get_logger
 from src.constants import *
 from exception import ModelTrainingError
-from entity.artifact_entity import BuildFeaturesArifact
-from entity.config_entity import ModelTrainerConfig
+from src.entity.artifact_entity import BuildFeaturesArifact
+from src.entity.config_entity import ModelTrainerConfig
 
 logger = get_logger(log_filename="predict.log")
 

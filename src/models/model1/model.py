@@ -6,10 +6,10 @@ import pandas as pd
 from src.logger import get_logger
 from src.constants import *
 from sklearn.feature_extraction.text import TfidfVectorizer
-from exception import ModelTrainingError
+from src.exception import ModelTrainingError
 
-from entity.artifact_entity import BuildFeaturesArifact, ModelTrainerArtifact
-from entity.config_entity import ModelTrainerConfig
+from src.entity.artifact_entity import BuildFeaturesArifact, ModelTrainerArtifact
+from src.entity.config_entity import ModelTrainerConfig
 
 logger = get_logger(log_filename="model_trainer.log")
 
