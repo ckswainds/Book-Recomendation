@@ -3,8 +3,8 @@ import joblib
 import scipy.sparse as sp
 import pandas as pd
 
-from logger import get_logger
-from constants import *
+from src.logger import get_logger
+from src.constants import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from exception import ModelTrainingError
 

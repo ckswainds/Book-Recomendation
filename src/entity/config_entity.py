@@ -4,6 +4,7 @@ from src.constants import *
 
 
 
+
 @dataclass
 class DataIngestionConfig:
     data_ingestion_dir:str=os.path.join(FEATURE_STORE_DIRNAME,FEATURE_STORE_EXTERNAL_DATA_FOLDER)

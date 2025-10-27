@@ -5,8 +5,8 @@ import scipy.sparse as sp
 import pandas as pd
 
 from sklearn.metrics.pairwise import cosine_similarity
-from logger import get_logger
-from constants import *
+from src.logger import get_logger
+from src.constants import *
 from exception import ModelTrainingError
 from entity.artifact_entity import BuildFeaturesArifact
 from entity.config_entity import ModelTrainerConfig
