@@ -36,9 +36,9 @@ WORKDIR /app
 COPY . /app
 COPY data/interim/modified_books.csv /app/data/interim/modified_books.csv
 COPY data/interim/modified_papers.csv /app/data/interim/modified_papers.csv
-COPY ./src /app
+
 # Add Python path for absolute imports
-ENV PYTHONPATH="/app"
+ENV PYTHONPATH="/app/src"
 
 RUN pip install --no-cache-dir -r requirements.txt
 
