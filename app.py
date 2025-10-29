@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 
 # API_URL = st.secrets["API_URL"]
-# API_URL = "http://localhost:8000/predict"
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "http://localhost:8000/predict"
+# API_URL = "http://127.0.0.1:8000/predict"
 
 
 
