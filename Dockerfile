@@ -34,7 +34,8 @@ COPY src/ /app/src/
 
 # Copy everything else (app.py / data / requirements.txt)
 COPY . /app/
-
+COPY templates/ /app/templates/
+COPY static/ /app/static/
 # Make "src" discoverable as a package
 ENV PYTHONPATH="/app"
 
