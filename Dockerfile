@@ -45,4 +45,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
 EXPOSE 7860
 # CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
-CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+# CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+CMD ["bash", "-c", "uvicorn fastapi_app:app --host 0.0.0.0 --port 8000 & streamlit run streamlit_app.py --server.port=7860 --server.address=0.0.0.0"]
+

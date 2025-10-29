@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
 
-API_URL = st.secrets["API_URL"]
+# API_URL = st.secrets["API_URL"]
+API_URL = "http://localhost:8000/predict"
 
 
 st.title("📚 Book & Research Paper Recommendation")

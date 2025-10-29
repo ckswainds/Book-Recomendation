@@ -9,11 +9,11 @@ from fastapi.responses import JSONResponse
 # Dynamically add src to Python path no matter where the app runs
 
 
-from src.models.model1.predict import RecommenderPredictor
+# from src.models.model1.predict import RecommenderPredictor
 from src.logger import get_logger
 import json
 import ast
-# from src.models.model2.predict import start_prediction
+from src.models.model2.predict import start_prediction
 
 # The application instance must be named 'app' for the Docker CMD to find it: app:app
 app = FastAPI() 
@@ -48,10 +48,10 @@ async def predict(
 
     try:
         #Using tfidf
-        predictor = RecommenderPredictor(query, build_feat_artifact, trainer_cfg)
-        output_json = predictor.predict(top_books=top_n_books, top_papers=top_n_papers)
-        #using sentence transformer
-        # output_json=start_prediction(query,n_books=5,n_papers=5)
+        # predictor = RecommenderPredictor(query, build_feat_artifact, trainer_cfg)
+        # output_json = predictor.predict(top_books=top_n_books, top_papers=top_n_papers)
+        # #using sentence transformer
+        output_json=start_prediction(query,n_books=5,n_papers=5)
         # Accept dict or JSON string (some predictor implementations returned str)
         if isinstance(output_json, dict):
             output_obj = output_json
