@@ -24,31 +24,6 @@ with st.form(key="search_form"):
 
     submit = st.form_submit_button("🔍 Recommend")
 
-# Dummy logic (replace with your API/model call)
-def get_recommendations(query, nb, np):
-    return {
-        "query": query,
-        "top_books": [
-            {
-                "title": f"Book {i+1}",
-                "authors": "Author XYZ",
-                "publisher": "Cambridge",
-                "publishedDate": "2014",
-                "avgrating": 4.5,
-                "previewLink": "https://google.com",
-                "description": "Sample description about the book..."
-            } for i in range(nb)
-        ],
-        "top_papers": [
-            {
-                "Title": f"Research Paper {i+1}",
-                "Authors": "Author ABC",
-                "Year": "2023",
-                "Citations": "102",
-                "URL": "https://google.com"
-            } for i in range(np)
-        ]
-    }
 
 
 # -------------------- PROCESS --------------------
