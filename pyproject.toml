@@ -1,3 +1,21 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "book_recommendation"
+version = "0.1.0"
+description = "A book & research paper recommendation system"
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    "streamlit",
+    "requests",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
