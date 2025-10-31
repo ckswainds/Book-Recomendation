@@ -1,5 +1,5 @@
 import streamlit as st
-from app.src.models.model2.predict import start_prediction
+from src.models.model2.predict import start_prediction
 
 from src.models.model1.predict import RecommenderPredictor
 from src.entity.artifact_entity import BuildFeaturesArifact
