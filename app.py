@@ -1,5 +1,9 @@
 import streamlit as st
 from src.models.model2.predict import start_prediction
+from src.models.model1.predict import RecommenderPredictor
+from src.entity.artifact_entity import BuildFeaturesArifact
+from src.entity.config_entity import ModelTrainerConfig
+
 st.set_page_config(page_title="AI Book & Paper Recommender", layout="wide")
 
 # -------------------- Load CSS --------------------
@@ -29,12 +33,20 @@ with st.form(key="search_form"):
 # -------------------- PROCESS --------------------
 if submit:
     st.session_state.result = start_prediction(query, top_n_books, top_n_papers)
+    #Using tfidf
+    # build_feat_artifact = BuildFeaturesArifact(
+    #     modified_books_data_filepath="data/interim/modified_books.csv",
+    #     modified_papers_data_filepath="data/interim/modified_papers.csv",
+    # )
+    # trainer_cfg = ModelTrainerConfig()
+    # predictor = RecommenderPredictor(query, build_feat_artifact, trainer_cfg)
+    # st.session_state.result = predictor.predict(top_books=top_n_books, top_papers=top_n_papers)
 
 
 # -------------------- RESULTS DISPLAY --------------------
 if "result" in st.session_state:
     result = st.session_state.result
-
+    
     st.markdown(
         f"<h2>Recommendations for: <span style='color:#4338ca;'>{result['query']}</span></h2>",
         unsafe_allow_html=True
