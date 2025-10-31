@@ -1,7 +1,8 @@
-# setup.py (Place in the BOOK-RECOMENDATION/ root folder)
+from setuptools import setup, find_packages
 
-from setuptools import setup
-
-# This simple setup() call tells setuptools to look at pyproject.toml 
-
-setup()
+setup(
+    name="book-recommendation",
+    version="0.1",
+    packages=find_packages(),
+    include_package_data=True,
+)
