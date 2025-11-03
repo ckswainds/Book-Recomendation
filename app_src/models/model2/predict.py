@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-from entity.config_entity import ModelConfig
+from app_src.entity.config_entity import ModelConfig
 from entity.artifact_entity import BuildFeaturesArifact
 from models.model2.model import RecommendationModel
 from logger import get_logger
