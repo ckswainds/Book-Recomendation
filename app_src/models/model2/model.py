@@ -1,14 +1,14 @@
 import pandas as pd
 # from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
-from entity.config_entity import ModelConfig
-from entity.artifact_entity import ModelArtifact,BuildFeaturesArifact
+from app_src.entity.config_entity import ModelConfig
+from app_src.entity.artifact_entity import ModelArtifact,BuildFeaturesArifact
 import numpy as np
 import json
 import os
-from logger import get_logger 
+from app_src.logger import get_logger 
 import numpy as np
-from helper import get_query_embedding
+from app_src.helper import get_query_embedding
 # Initialize logger
 logger = get_logger(__name__)
 
