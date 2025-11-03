@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import ast
 from app_src.entity.artifact_entity import BuildFeaturesArifact
-from app_src.entity.config_entity import ModelTrainerConfig
+# from app_src.entity.config_entity import ModelTrainerConfig
 from app_src.models.model1.predict import RecommenderPredictor
 from app_src.logger import get_logger
 
