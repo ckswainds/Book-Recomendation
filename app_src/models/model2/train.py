@@ -1,8 +1,8 @@
 import pandas as pd
-from entity.config_entity import ModelConfig
-from entity.artifact_entity import BuildFeaturesArifact, ModelArtifact
-from models.model2.model import RecommendationModel
-from logger import get_logger
+from app_src.entity.config_entity import ModelConfig
+from app_src.entity.artifact_entity import BuildFeaturesArifact, ModelArtifact
+from app_src.models.model2.model import RecommendationModel
+from app_src.logger import get_logger
 
 # Initialize logger for the training script
 logger = get_logger(__name__)

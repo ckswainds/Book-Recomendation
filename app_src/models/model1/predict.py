@@ -5,11 +5,11 @@ import scipy.sparse as sp
 import pandas as pd
 
 from sklearn.metrics.pairwise import cosine_similarity
-from logger import get_logger
-from constants import *
-from exception import ModelTrainingError
-from entity.artifact_entity import BuildFeaturesArifact
-from entity.config_entity import ModelTrainerConfig
+from app_src.logger import get_logger
+from app_src.constants import *
+from app_src.exception import ModelTrainingError
+from app_src.entity.artifact_entity import BuildFeaturesArifact
+from app_src.entity.config_entity import ModelTrainerConfig
 
 logger = get_logger(log_filename="predict.log")
 
