@@ -12,6 +12,8 @@ WORKDIR /app
 
 # Copy project files
 COPY . /app
+COPY data/interim/modified_books.csv /app/data/interim/modified_books.csv
+COPY data/interim/modified_papers.csv /app/data/interim/modified_papers.csv
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt

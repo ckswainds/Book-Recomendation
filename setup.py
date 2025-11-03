@@ -1,7 +1,10 @@
-# setup.py (Place in the BOOK-RECOMENDATION/ root folder)
+from setuptools import setup, find_packages
 
-from setuptools import setup
-
-# This simple setup() call tells setuptools to look at pyproject.toml 
-
-setup()
+setup(
+    name="src",
+    version="0.0.1",
+    description="A Project on Book and Research paper Recommendation.",
+    author="chandan",
+    author_email="chandankumarswain3467@gmail.com",
+    packages=find_packages(),
+)
