@@ -1,0 +1,52 @@
+Logging output also directed to: logs\predict.log
+[2025-10-13 22:36:15] [INFO] [book_recommender] Initialized RecommenderPredictor for query: deep learning for image recognition
+[2025-10-13 22:36:15] [INFO] [book_recommender] Loading TF-IDF vectorizers and matrices from disk
+[2025-10-13 22:36:16] [INFO] [book_recommender] Prediction successful for query: deep learning for image recognition
+{
+    "query": "deep learning for image recognition",
+    "top_books": [
+        {
+            "title": "Fundamentals of Digital Image Processing",
+            "authors": "Anil K. Jain",
+            "description": "Two-Dimensional Systems and Mathematical Preliminaries - Image Perception - Image Sampling and Quantization - Image Transforms - Image Representation by Stochastic Models - Image Enhancement - Image Filtering and Restoration - Image Analysis and Computer Vision - Image Reconstruction From Projections - Image Data Compression.",
+            "publisher": "Pearson",
+            "publishedDate": "1989-01-01",
+            "avgrating": 5.0,
+            "previewLink": "http://books.google.co.in/books?id=GANSAAAAMAAJ&dq=intitle:%22image+processing%22&hl=&cd=19&source=gbs_api"
+        },
+        {
+            "title": "Digital Image Processing Using MATLAB",
+            "authors": "Rafael C. Gonzalez, Richard Eugene Woods, Steven L. Eddins",
+            "description": "Solutions to problems in the field of digital image processing generally require extensive experimental work involving software simulation and testing with large sets of sample images. Although algorithm development typically is based on theoretical underpinnings, the actual implementation of these algorithms almost always requires parameter estimation and, frequently, algorithm revision and comparison of candidate solutions. Thus, selection of a flexible, comprehensive, and well-documented software development environment is a key factor that has important implications in the cost, development time, and portability of image processing solutions. In spite of its importance, surprisingly little has been written on this aspect of the field in the form of textbook material dealing with both theoretical principles and software implementation of digital image processing concepts. This book was written for just this purpose. Its main objective is to provide a foundation for implementing image processing algorithms using modern software tools. A complementary objective was to prepare a book that is self-contained and easily readable by individuals with a basic background in digital image processing, mathematical analysis, and computer programming, all at a level typical of that found in a junior/senior curriculum in a technical discipline. Rudimentary knowledge of MATLAB also is desirable. To achieve these objectives, we felt that two key ingredients were needed. The first was to select image processing material that is representative of material covered in a formal course of instruction in this field. The second was to select software tools that are well supported and documented, and which have a wide range of applications in the \"real\" world. To meet the first objective, most of the theoretical concepts in the following chapters were selected fromDigital Image Processingby Gonzalez and Woods, which has been the choice introductory textbook used by educators all over the world for over two decades. The software tools selected are from the MATLAB Image Processing Toolbox (IPT), which similarly occupies a position of eminence in both education and industrial applications. A basic strategy followed in the preparation of the book was to provide a seamless integration of well-established theoretical concepts and their implementation using state-of-the-art software tools. The book is organized along the same lines asDigital Image Processing.In this way, the reader has easy access to a more detailed treatment of all the image processing concepts discussed here, as well as an up-to-date set of references for further reading. Following this approach made it possible to present theoretical material in a succinct manner and thus we were able to maintain a focus on the software implementation aspects of image processing problem solutions. Because it works in the MATLAB computing environment, the Image Processing Toolbox offers some significant advantages, not only f in the breadth of its computational tools, but also because it is supported under most operating systems in use today. A unique feature of this book is its emphasis on showing how to develop new code to enhance existing MATLAB and IPT functionality This is an important feature in an area such as image processing, which, as noted earlier, is characterized by the need for extensive algorithm development and experimental work. After an introduction to the fundamentals of MATLAB functions and programming, the book proceeds to address the mainstream areas of image processing. The major areas covered include intensity transformations, linear and nonlinear spatial filtering, filtering in the frequency domain, image restoration and registration, color image processing, wavelets, image data compression, morphological image processing, image segmentation, region and boundary representation and description, and object recognition. This material is complemented by numerous illustrations of how to solve image processing problems using MATLAB and IPT functions. In cases where a function did not exist, a new function was written and documented as part of the instructional focus of the book. Over 60 new functions are included in the following chapters. These functions increase the scope of IPT by approximately 35 percent and also serve the important purpose of further illustrating how to implement new image processing software solutions. The material is presented in textbook format, not as a software manual. Although the book is self-contained, we have established a companion Web site (see Section 1.5) designed to provide support in a number of areas. For students following a formal course of study or individuals embarked on a program of self study, the site contains tutorials and reviews on background material, as well as projects and image databases, including all images in the book. For instructors, the site contains classroom presentation materials that include PowerPoint slides of all the images and graphics used in the book. Individuals already familiar with image processing and IPT fundamentals will find the site a useful place for up-to-date references, new implementation techniques, and a host of other support material not easily found elsewhere. All purchasers of the book are eligible to download executable files of all the new functions developed in the text. As is true of most writing efforts of this nature, progress continues after work on the manuscript stops. For this reason, we devoted significant effort to the selection of material that we believe is fundamental, and whose value is likely to remain applicable in a rapidly evolving body of knowledge. We trust that readers of the book will benefit from this effort and thus find the material timely and useful in their work.",
+            "publisher": "Prentice Hall",
+            "publishedDate": "2004-01-01",
+            "avgrating": 5.0,
+            "previewLink": "http://books.google.co.in/books?id=YYuJQgAACAAJ&dq=intitle:%22image+processing%22&hl=&cd=25&source=gbs_api"
+        },
+        {
+            "title": "Digital Image Processing",
+            "authors": "Rafael C. Gonzalez, Richard Eugene Woods",
+            "description": "A comprehensive digital image processing book that reflects new trends in this field such as document image compression and data compression standards. The book includes a complete rewrite of image data compression, a new chapter on image analysis, and a new section on image morphology.",
+            "publisher": "Prentice Hall",
+            "publishedDate": "2008-01-01",
+            "avgrating": 4.0,
+            "previewLink": "http://books.google.co.in/books?id=8uGOnjRGEzoC&dq=intitle:%22image+processing%22&hl=&cd=1&source=gbs_api"
+        }
+    ],
+    "top_papers": [
+        {
+            "Title": "DEEP LEARNING FOR IMAGE RECOGNITION",
+            "Authors": "Vysok\u00e9 U\u010den\u00ed, Technick\u00e9 V Brn\u011b, Grafiky A Multim\u00e9di\u00ed, Bakal\u00e1\u0159sk\u00e1 pr\u00e1ce, B. Thesis, Autor Pr\u00e1ce, Milan Munzar, Rozpozn\u00e1v\u00e1n\u00ed Obrazu",
+            "Year": 2013.0,
+            "Citations": 26,
+            "URL": "https://www.semanticscholar.org/paper/68746c8ab10be4e42c8458b33bf1747fda553fe7"
+        },
+        {
+            "Title": "A review of deep learning in image recognition",
+            "Authors": "Myeongsuk Pak, Sanghoon Kim",
+            "Year": 2017.0,
+            "Citations": 184,
+            "URL": "https://www.semanticscholar.org/paper/794020b75954ef1219e313d945daa3364209f35e"
+        }
+    ]
+}
