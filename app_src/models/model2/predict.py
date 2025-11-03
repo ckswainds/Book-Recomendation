@@ -3,7 +3,7 @@ import json
 from app_src.entity.config_entity import ModelConfig
 from app_src.entity.artifact_entity import BuildFeaturesArifact
 from app_src.models.model2.model import RecommendationModel
-from logger import get_logger
+from app_src.logger import get_logger
 
 # Initialize logger for the prediction script
 logger = get_logger(__name__)
