@@ -2,14 +2,14 @@ import os,sys
 import streamlit as st
 import json
 import ast
-from src.entity.artifact_entity import BuildFeaturesArifact
-from src.entity.config_entity import ModelTrainerConfig
-from src.models.model1.predict import RecommenderPredictor
-from src.logger import get_logger
+from app_src.entity.artifact_entity import BuildFeaturesArifact
+from app_src.entity.config_entity import ModelTrainerConfig
+from app_src.models.model1.predict import RecommenderPredictor
+from app_src.logger import get_logger
 
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
-from src.models.model2.predict import start_prediction
+from app_src.models.model2.predict import start_prediction
 # Configure page
 st.set_page_config(
     page_title="AI Book & Research Paper Recommender",

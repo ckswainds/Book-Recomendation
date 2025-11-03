@@ -2,13 +2,13 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from src.entity.artifact_entity import BuildFeaturesArifact
-from src.entity.config_entity import ModelTrainerConfig
-from src.models.model1.predict import RecommenderPredictor
-from src.logger import get_logger
+from app_src.entity.artifact_entity import BuildFeaturesArifact
+from app_src.entity.config_entity import ModelTrainerConfig
+from app_src.models.model1.predict import RecommenderPredictor
+from app_src.logger import get_logger
 import json
 import ast
-from src.models.model2.predict import start_prediction
+from app_src.models.model2.predict import start_prediction
 
 # The application instance must be named 'app' for the Docker CMD to find it: app:app
 app = FastAPI() 
