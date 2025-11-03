@@ -1,8 +1,8 @@
 import pandas as pd
 import json
 from app_src.entity.config_entity import ModelConfig
-from entity.artifact_entity import BuildFeaturesArifact
-from models.model2.model import RecommendationModel
+from app_src.entity.artifact_entity import BuildFeaturesArifact
+from app_src.models.model2.model import RecommendationModel
 from logger import get_logger
 
 # Initialize logger for the prediction script
