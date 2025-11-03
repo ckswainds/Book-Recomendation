@@ -2,8 +2,8 @@ import os,sys
 import streamlit as st
 import json
 import ast
-from app_src.entity.artifact_entity import BuildFeaturesArifact
-from app_src.entity.config_entity import ModelTrainerConfig
+# from app_src.entity.artifact_entity import BuildFeaturesArifact
+# from app_src.entity.config_entity import ModelTrainerConfig
 from app_src.models.model1.predict import RecommenderPredictor
 from app_src.logger import get_logger
 
@@ -335,11 +335,11 @@ if st.button("Recommend", use_container_width=True):
     else:
         with st.spinner("🔄 Finding the best recommendations..."):
             try:
-                build_feat_artifact = BuildFeaturesArifact(
-                    modified_books_data_filepath="data/interim/modified_books.csv",
-                    modified_papers_data_filepath="data/interim/modified_papers.csv",
-                )
-                trainer_cfg = ModelTrainerConfig()
+                # build_feat_artifact = BuildFeaturesArifact(
+                #     modified_books_data_filepath="data/interim/modified_books.csv",
+                #     modified_papers_data_filepath="data/interim/modified_papers.csv",
+                # )
+                # trainer_cfg = ModelTrainerConfig()
                 
                 # Using sentence transformer
                 output_json = start_prediction(query, n_books=top_n_books, n_papers=top_n_papers)
