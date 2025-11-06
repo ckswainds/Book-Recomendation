@@ -43,7 +43,7 @@ This project helps users discover relevant academic and technical resources by l
 5. **Similarity Computation** – Calculated **cosine similarity** between user query embeddings and resource embeddings.
 6. **Ranking & Recommendation** – Returned top N matches sorted by similarity scores.
 7. **Versioning & Reproducibility** – Managed datasets, intermediate files, and trained models using **DVC**.
-8. **Deployment** – Containerized the FastAPI app with **Docker**, ready for deployment on **Vercel/Render**.
+8. **Deployment** – Containerized the FastAPI app with **Docker**, ready for deployment on **Streamlit/HuggingFace**.
 
 ---
 
