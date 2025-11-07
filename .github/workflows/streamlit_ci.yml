@@ -25,6 +25,8 @@ jobs:
 
       - name: Authenticate and Pull Data from DagsHub
         run: |
+          dvc remote add origin s3://dvc
+          dvc remote modify origin endpointurl https://dagshub.com/Chandankumar2309/book-paper-recommender.s3
           dvc remote modify origin --local access_key_id ${{secrets.DAGSHUB_TOKEN}}
           dvc remote modify origin --local secret_access_key ${{ secrets.DAGSHUB_TOKEN }}
           dvc pull --force
