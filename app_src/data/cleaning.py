@@ -91,7 +91,7 @@ class Cleaning:
                     filtered_books.append(item)
 
             books_list = []
-            for item in filtered_books:app_src.
+            for item in filtered_books:
                 info = item["volumeInfo"]
                 books_list.append({
                     "title": info.get("title"),

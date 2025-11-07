@@ -23,10 +23,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Authenticate and Pull Data with DVC
+      - name: Authenticate and Pull Data from DagsHub
         run: |
-          echo '${{ secrets.GDRIVE_CREDENTIALS_DATA }}' > gdrive-cred.json
+          dvc remote modify origin --local auth basic
+          dvc remote modify origin --local user ${{ secrets.DAGSHUB_USER }}
+          dvc remote modify origin --local password ${{ secrets.DAGSHUB_TOKEN }}
           dvc pull --force
+
 
       - name: Pull DVC data
         run: |
