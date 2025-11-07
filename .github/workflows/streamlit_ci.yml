@@ -30,17 +30,17 @@ jobs:
           dvc remote modify origin --local access_key_id ${{secrets.DAGSHUB_TOKEN}}
           dvc remote modify origin --local secret_access_key ${{ secrets.DAGSHUB_TOKEN }}
           dvc pull --force
-      #   continue-on-error: true
-      # - name: Fallback - Use DagsHub Download if DVC Pull fails
-      #   if: steps.dvc-pull.outcome == 'failure'
-      #   run: |
-      #     echo "⚠️ DVC Pull failed, falling back to DagsHub Download..."
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/raw/Ml_books.csv" "./data/raw/"
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/raw/all_papers.csv" "./data/raw/"
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/interim/modified_books.csv" "./data/interim/"
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/interim/modified_papers.csv" "./data/interim/"
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/processed/matrices/sentence_transformer_book_matrix.npy" "./data/processed/matrices/"
-      #     dagshub download --bucket Chandankumar2309/book-paper-recommender "data/processed/matrices/sentence_transformer_paper_matrix.npy" "./data/processed/matrices/"
+        continue-on-error: true
+      - name: Fallback - Use DagsHub Download if DVC Pull fails
+        if: steps.dvc-pull.outcome == 'failure'
+        run: |
+          echo "⚠️ DVC Pull failed, falling back to DagsHub Download..."
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/raw/Ml_books.csv" "./data/raw/"
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/raw/all_papers.csv" "./data/raw/"
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/interim/modified_books.csv" "./data/interim/"
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/interim/modified_papers.csv" "./data/interim/"
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/processed/matrices/sentence_transformer_book_matrix.npy" "./data/processed/matrices/"
+          dagshub download --bucket Chandankumar2309/book-paper-recommender "data/processed/matrices/sentence_transformer_paper_matrix.npy" "./data/processed/matrices/"
 
       - name: Run tests
         run: |
