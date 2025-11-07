@@ -14,11 +14,11 @@ import os
 import sys
 import re
 import pandas as pd
-from constants import *
-from logger import get_logger
+from app_src.constants import *
+from app_src.logger import get_logger
 
-from entity.artifact_entity import BuildFeaturesArifact, DataCleaningArtifact
-from entity.config_entity import BuildFeatureConfig
+from app_src.entity.artifact_entity import BuildFeaturesArifact, DataCleaningArtifact
+from app_src.entity.config_entity import BuildFeatureConfig
 
 from sklearn.preprocessing import MinMaxScaler
 

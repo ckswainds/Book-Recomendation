@@ -1,11 +1,11 @@
 import os
 import sys
 import json
-from constants import *
-from exception import BookRecommenderError
-from entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact
-from entity.config_entity import DataCleaningConfig
-from logger import get_logger
+from app_src.constants import *
+from app_src.exception import BookRecommenderError
+from app_src.entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact
+from app_src.entity.config_entity import DataCleaningConfig
+from app_src.logger import get_logger
 import pandas as pd
 import yaml
 
@@ -91,7 +91,7 @@ class Cleaning:
                     filtered_books.append(item)
 
             books_list = []
-            for item in filtered_books:
+            for item in filtered_books:app_src.
                 info = item["volumeInfo"]
                 books_list.append({
                     "title": info.get("title"),

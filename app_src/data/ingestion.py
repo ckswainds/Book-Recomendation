@@ -1,8 +1,8 @@
-from constants import *
-from logger import get_logger
-from exception import DataLoadError,MissingDataFieldError
-from entity.config_entity import DataIngestionConfig
-from entity.artifact_entity import DataIngestionArtifact
+from app_src.constants import *
+from app_src.logger import get_logger
+from app_src.exception import DataLoadError,MissingDataFieldError
+from app_src.entity.config_entity import DataIngestionConfig
+from app_src.entity.artifact_entity import DataIngestionArtifact
 import requests
 import json
 from typing import List, Union, Any

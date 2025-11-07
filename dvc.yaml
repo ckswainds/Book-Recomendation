@@ -1,29 +1,29 @@
 stages:
   data_ingestion:
-    cmd: python src/data/ingestion.py
+    cmd: python app_src/data/ingestion.py
     deps:
-      - src/data/ingestion.py
-      - src/entity/config_entity.py
-      - src/entity/artifact_entity.py
+      - app_src/data/ingestion.py
+      - app_src/entity/config_entity.py
+      - app_src/entity/artifact_entity.py
     outs:
       - data/external
 
   data_cleaning:
-    cmd: python src/data/cleaning.py
+    cmd: python app_src/data/cleaning.py
     deps:
-      - src/data/cleaning.py
-      - src/entity/config_entity.py
-      - src/entity/artifact_entity.py
+      - app_src/data/cleaning.py
+      - app_src/entity/config_entity.py
+      - app_src/entity/artifact_entity.py
     outs:
       - data/raw/Ml_books.csv
       - data/raw/all_papers.csv
 
   build_features:
-    cmd: python src/data/build_features.py
+    cmd: python app_src/data/build_features.py
     deps:
-      - src/data/build_features.py
-      - src/entity/config_entity.py
-      - src/entity/artifact_entity.py
+      - app_src/data/build_features.py
+      - app_src/entity/config_entity.py
+      - app_src/entity/artifact_entity.py
       - data/raw/Ml_books.csv
       - data/raw/all_papers.csv
     outs:
@@ -31,12 +31,12 @@ stages:
       - data/interim/modified_papers.csv
   
   sentence_transformer_model_trainer:
-    cmd: python src/models/model2/train.py
+    cmd: python app_src/models/model2/train.py
     deps:
-        - src/models/model2/model.py
-        - src/entity/config_entity.py
-        - src/entity/artifact_entity.py
-        - src/data/build_features.py
+        - app_src/models/model2/model.py
+        - app_src/entity/config_entity.py
+        - app_src/entity/artifact_entity.py
+        - app_src/data/build_features.py
         - data/interim/modified_books.csv
         - data/interim/modified_papers.csv
     outs:
@@ -47,12 +47,12 @@ stages:
 
 
   # model_trainer:
-  #   cmd: python src/models/model1/model.py
+  #   cmd: python app_src/models/model1/model.py
   #   deps:
-  #     - src/models/model1/model.py
-  #     - src/entity/config_entity.py
-  #     - src/entity/artifact_entity.py
-  #     - src/data/build_features.py
+  #     - app_src/models/model1/model.py
+  #     - app_src/entity/config_entity.py
+  #     - app_src/entity/artifact_entity.py
+  #     - app_src/data/build_features.py
   #     - data/interim/modified_books.csv
   #     - data/interim/modified_papers.csv
   #   outs:
@@ -61,12 +61,12 @@ stages:
 
 
   # prediction:
-  #   cmd: python src/models/model1/predict.py "machine learning" > data/processed/predictions.json
+  #   cmd: python app_src/models/model1/predict.py "machine learning" > data/processed/predictions.json
   #   deps:
-  #     - src/models/model1/predict.py
-  #     - src/models/model1/model.py
-  #     - src/entity/config_entity.py
-  #     - src/entity/artifact_entity.py
+  #     - app_src/models/model1/predict.py
+  #     - app_src/models/model1/model.py
+  #     - app_src/entity/config_entity.py
+  #     - app_src/entity/artifact_entity.py
   #     - data/processed/models
   #     - data/processed/matrices
   #     - data/interim/modified_books.csv
