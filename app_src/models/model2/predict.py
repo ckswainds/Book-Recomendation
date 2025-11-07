@@ -4,9 +4,11 @@ from app_src.entity.config_entity import ModelConfig
 from app_src.entity.artifact_entity import BuildFeaturesArifact
 from app_src.models.model2.model import RecommendationModel
 from app_src.logger import get_logger
-
+from app_src.utils.data_manager import ensure_all_data_available
 # Initialize logger for the prediction script
 logger = get_logger(__name__)
+
+
 
 def start_prediction(query: str, n_books: int = 5, n_papers: int = 5) -> dict:
     """
@@ -26,10 +28,11 @@ def start_prediction(query: str, n_books: int = 5, n_papers: int = 5) -> dict:
     Raises:
         Exception: If any step during prediction fails.
     """
+    
     try:
         logger.info(f"Starting prediction for query: '{query}' ({n_books} books, {n_papers} papers).")
-
-        # Initialize configuration and feature artifacts (paths must match where training placed the data)
+        ensure_all_data_available()
+        # Initialize configuration and feature artifacts 
         model_config = ModelConfig()
         build_feature_artifact = BuildFeaturesArifact(
         modified_books_data_filepath="data/interim/modified_books.csv",

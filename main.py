@@ -6,18 +6,9 @@ import ast
 # from app_src.entity.config_entity import ModelTrainerConfig
 # from app_src.models.model1.predict import RecommenderPredictor
 from app_src.logger import get_logger
-
-# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-# sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 from app_src.models.model2.predict import start_prediction
 import os
-# import subprocess
-# if os.path.exists(".dvc"):
-#     print("🔄 DVC detected — pulling data from remote storage...")
-#     subprocess.run(["dvc", "pull"], check=True)
-#     print("✅ DVC data pull completed.")
-# else:
-#     print("⚠️ No DVC folder detected, skipping data pull")
+
 
 # Configure page
 st.set_page_config(
