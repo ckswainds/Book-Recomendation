@@ -1,77 +1,65 @@
-# All required data files
 import os
-import logging
-from dagshub import get_repo_bucket_client
-import streamlit as st
-import dagshub
-# Configure logger
-logger = logging.getLogger(__name__)
-
-# Files to ensure exist locally
-DATA_FILES = {
-    "data/raw/Ml_books.csv": "data/raw/Ml_books.csv",
-    "data/raw/all_papers.csv": "data/raw/all_papers.csv",
-    "data/interim/modified_books.csv": "data/interim/modified_books.csv",
-    "data/interim/modified_papers.csv": "data/interim/modified_papers.csv",
-    "data/processed/matrices/sentence_transformer_book_matrix.npy": "data/processed/matrices/sentence_transformer_book_matrix.npy",
-    "data/processed/matrices/sentence_transformer_paper_matrix.npy": "data/processed/matrices/sentence_transformer_paper_matrix.npy",
-}
+import subprocess
+from loguru import logger
 
 
-def get_dagshub_boto_client():
+def pull_dvc_data():
     """
-    Creates and returns an authenticated boto client for the DagsHub repo.
-    Works both locally and on Streamlit Cloud (if DAGSHUB_TOKEN is in secrets).
+    Pulls all DVC-tracked data from the configured remote (DagsHub S3 bucket).
+    This replaces manual boto downloads.
+    Works silently in background on Streamlit Cloud or locally.
     """
+    dagshub_user = os.getenv("DAGSHUB_USER")
+    dagshub_token = os.getenv("DAGSHUB_TOKEN")
+
+    if not dagshub_user or not dagshub_token:
+        logger.warning(
+            "DAGSHUB_USER or DAGSHUB_TOKEN not found in environment. "
+            "DVC may fail to authenticate with remote."
+        )
+
     try:
-        user = os.getenv("DAGSHUB_USER") or st.secrets.get("DAGSHUB_USER")
-        token = os.getenv("DAGSHUB_TOKEN") or st.secrets.get("DAGSHUB_TOKEN")
-        repo = "book-paper-recommender"
-        
-        if not user or not token:
-            raise ValueError("Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables.")
-
-        os.environ["DAGSHUB_USER"] = user
-        os.environ["DAGSHUB_TOKEN"] = token
-        
-        # dagshub.auth.add_app_token(token)
-        dagshub.auth.add_app_token(token)
-        boto_client = get_repo_bucket_client(f"{user}/{repo}", flavor="boto")
-        logger.info("✅ Successfully created DagsHub boto client.")
-        return boto_client, user, repo
+        logger.info("Starting DVC data synchronization from remote...")
+        result = subprocess.run(
+            ["dvc", "pull"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+        logger.info("✅ DVC data successfully pulled from DagsHub remote.")
+        logger.debug(result.stdout)
+    except subprocess.CalledProcessError as e:
+        logger.error("❌ DVC pull failed.")
+        logger.error(e.stderr)
+        raise
     except Exception as e:
-        logger.error(f"❌ Failed to initialize DagsHub boto client: {e}", exc_info=True)
+        logger.error(f"Unexpected error while pulling data: {e}")
         raise
 
 
 def download_data_from_remote():
     """
-    Ensures that all required data files exist locally.
-    Downloads any missing ones silently using DagsHub's boto client.
+    Ensures that all data directories exist before the app starts.
+    If data is missing, triggers DVC pull automatically.
     """
-    try:
-        boto_client, user, repo = get_dagshub_boto_client()
+    required_paths = [
+        "data/raw/Ml_books.csv",
+        "data/raw/all_papers.csv",
+        "data/interim/modified_books.csv",
+        "data/interim/modified_papers.csv",
+        "data/processed/matrices/sentence_transformer_book_matrix.npy",
+        "data/processed/matrices/sentence_transformer_paper_matrix.npy",
+    ]
 
-        for remote_path, local_path in DATA_FILES.items():
-            os.makedirs(os.path.dirname(local_path), exist_ok=True)
-            if not os.path.exists(local_path):
-                try:
-                    logger.info(f"📥 Downloading {remote_path} from DagsHub S3...")
-                    boto_client.download_file(
-                        Bucket=f"{repo}",
-                        Key=remote_path,
-                        Filename=local_path,
-                    )
-                    logger.info(f"✅ Downloaded {remote_path}")
-                except Exception as e:
-                    logger.error(f"⚠️ Failed to download {remote_path}: {e}", exc_info=True)
-            else:
-                logger.debug(f"File already exists: {local_path}")
+    missing = [p for p in required_paths if not os.path.exists(p)]
+    if missing:
+        logger.warning(f"⚠️ Missing files detected: {missing}")
+        pull_dvc_data()
+    else:
+        logger.info("✅ All data files already exist locally.")
 
-        logger.info("✅ All data files verified and available.")
-    except Exception as e:
-        logger.error(f"❌ Error during data download: {e}", exc_info=True)
-        raise
+
 
 
 @st.cache_resource
