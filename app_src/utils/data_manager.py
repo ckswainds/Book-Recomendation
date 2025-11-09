@@ -3,7 +3,7 @@ import os
 import logging
 from dagshub import get_repo_bucket_client
 import streamlit as st
-
+import dagshub
 # Configure logger
 logger = logging.getLogger(__name__)
 
@@ -27,13 +27,15 @@ def get_dagshub_boto_client():
         user = os.getenv("DAGSHUB_USER") or st.secrets.get("DAGSHUB_USER")
         token = os.getenv("DAGSHUB_TOKEN") or st.secrets.get("DAGSHUB_TOKEN")
         repo = "book-paper-recommender"
-
+        
         if not user or not token:
             raise ValueError("Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables.")
 
         os.environ["DAGSHUB_USER"] = user
         os.environ["DAGSHUB_TOKEN"] = token
-
+        
+        dagshub.auth.login(token=token)
+        
         boto_client = get_repo_bucket_client(f"{user}/{repo}", flavor="boto")
         logger.info("✅ Successfully created DagsHub boto client.")
         return boto_client, user, repo
