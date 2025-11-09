@@ -34,8 +34,8 @@ def get_dagshub_boto_client():
         os.environ["DAGSHUB_USER"] = user
         os.environ["DAGSHUB_TOKEN"] = token
         
-        dagshub.auth.login(token=token)
-        
+        # dagshub.auth.add_app_token(token)
+        dagshub.auth.add_app_token(token)
         boto_client = get_repo_bucket_client(f"{user}/{repo}", flavor="boto")
         logger.info("✅ Successfully created DagsHub boto client.")
         return boto_client, user, repo
