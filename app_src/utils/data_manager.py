@@ -1,7 +1,7 @@
 import os
 import subprocess
 from loguru import logger
-
+import streamlit as st
 
 def pull_dvc_data():
     """
