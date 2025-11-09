@@ -58,7 +58,7 @@ def download_data_from_remote():
                 try:
                     logger.info(f"📥 Downloading {remote_path} from DagsHub S3...")
                     boto_client.download_file(
-                        Bucket=f"{user}/{repo}",
+                        Bucket=f"{repo}",
                         Key=remote_path,
                         Filename=local_path,
                     )
