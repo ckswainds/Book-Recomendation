@@ -15,20 +15,19 @@ DATA_FILES = {
 }
 
 
+
 def authenticate_dagshub():
-    """
-    Authenticate DagsHub client in headless (non-OAuth) environments
-    like Streamlit Cloud or GitHub Actions.
-    """
     user = os.getenv("DAGSHUB_USER")
     token = os.getenv("DAGSHUB_TOKEN")
 
     if not user or not token:
-        raise EnvironmentError("Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables.")
+        raise EnvironmentError(
+            "Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables."
+        )
 
-    # Register credentials with dagshub’s internal auth manager
-    dagshub.auth.add_token(user, token)
-    logger.info(f"Authenticated with DagsHub as {user}")
+    # Correct method to add app token
+    dagshub.auth.add_app_token(token)
+    logger.info(f"✅ Authenticated with DagsHub as {user}")
 
     return user, token
 
