@@ -1,64 +1,43 @@
-import os
-import subprocess
-from loguru import logger
+
 import streamlit as st
-
-def pull_dvc_data():
-    """
-    Pulls all DVC-tracked data from the configured remote (DagsHub S3 bucket).
-    This replaces manual boto downloads.
-    Works silently in background on Streamlit Cloud or locally.
-    """
-    dagshub_user = os.getenv("DAGSHUB_USER")
-    dagshub_token = os.getenv("DAGSHUB_TOKEN")
-
-    if not dagshub_user or not dagshub_token:
-        logger.warning(
-            "DAGSHUB_USER or DAGSHUB_TOKEN not found in environment. "
-            "DVC may fail to authenticate with remote."
-        )
-
-    try:
-        logger.info("Starting DVC data synchronization from remote...")
-        result = subprocess.run(
-            ["dvc", "pull"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=True,
-        )
-        logger.info("✅ DVC data successfully pulled from DagsHub remote.")
-        logger.debug(result.stdout)
-    except subprocess.CalledProcessError as e:
-        logger.error("❌ DVC pull failed.")
-        logger.error(e.stderr)
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error while pulling data: {e}")
-        raise
+import os
+from dagshub import get_repo_bucket_client
+from loguru import logger
 
 
-def download_data_from_remote():
-    """
-    Ensures that all data directories exist before the app starts.
-    If data is missing, triggers DVC pull automatically.
-    """
-    required_paths = [
-        "data/raw/Ml_books.csv",
-        "data/raw/all_papers.csv",
-        "data/interim/modified_books.csv",
-        "data/interim/modified_papers.csv",
-        "data/processed/matrices/sentence_transformer_book_matrix.npy",
-        "data/processed/matrices/sentence_transformer_paper_matrix.npy",
-    ]
+DATA_FILES = {
+    "data/raw/Ml_books.csv": "data/raw/Ml_books.csv",
+    "data/raw/all_papers.csv": "data/raw/all_papers.csv",
+    "data/interim/modified_books.csv": "data/interim/modified_books.csv",
+    "data/interim/modified_papers.csv": "data/interim/modified_papers.csv",
+    "data/processed/matrices/sentence_transformer_book_matrix.npy": "data/processed/matrices/sentence_transformer_book_matrix.npy",
+    "data/processed/matrices/sentence_transformer_paper_matrix.npy": "data/processed/matrices/sentence_transformer_paper_matrix.npy",
+}
 
-    missing = [p for p in required_paths if not os.path.exists(p)]
-    if missing:
-        logger.warning(f"⚠️ Missing files detected: {missing}")
-        pull_dvc_data()
-    else:
-        logger.info("✅ All data files already exist locally.")
 
+def download_data_from_dagshub():
+    """Download all required data files from DagsHub S3 into local folders."""
+    user = os.getenv("DAGSHUB_USER")
+    token = os.getenv("DAGSHUB_TOKEN")
+    repo = "book-paper-recommender"
+
+    if not user or not token:
+        raise ValueError("Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables.")
+
+    logger.info(f"Accessing as {user}")
+    boto_client = get_repo_bucket_client(f"{user}/{repo}", flavor="boto")
+
+    for remote_path, local_path in DATA_FILES.items():
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        try:
+            logger.info(f"Downloading {remote_path}")
+            boto_client.download_file(
+                Bucket=repo,
+                Key=remote_path,
+                Filename=local_path
+            )
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to download {remote_path}: {e}")
 
 
 
@@ -66,6 +45,6 @@ def download_data_from_remote():
 def ensure_all_data_available():
     """
     Ensures all required data files are available locally.
-    Runs silently (no Streamlit messages).
+    
     """
-    download_data_from_remote()
+    download_data_from_dagshub()
