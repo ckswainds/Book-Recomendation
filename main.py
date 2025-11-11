@@ -18,6 +18,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+
+
+
 # Custom CSS matching the screenshot with white-green gradient theme
 st.markdown("""
     <style>
@@ -294,6 +297,11 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.info(
+    "📘 **Note:** Recommendations are currently available for selected topics in "
+    "**Machine Learning, Deep Learning, NLP, Data Science, AI**, and core **Electronics** areas "
+    "such as **Digital Electronics, Signal Processing, Communication Systems, VLSI, Control Systems.**"
+)
 # Input section
 st.markdown('<div class="input-container">', unsafe_allow_html=True)
 
