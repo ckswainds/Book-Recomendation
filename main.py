@@ -310,7 +310,7 @@ col1, col2, col3 = st.columns([4, 1, 1])
 with col1:
     query = st.text_input(
         "Search Query",
-        placeholder="Enter your topic (e.g., machine learning, quantum physics, etc.)",
+        placeholder="Enter your topic (e.g., machine learning, Deep learning, Vlsi etc.)",
         label_visibility="collapsed",
         key="query_input"
     )
