@@ -71,7 +71,7 @@ def start_prediction(query: str, n_books: int = 5, n_papers: int = 5) -> dict:
         raise
 
 if __name__ == "__main__":
-    # Example usage for prediction
+    
     query = "machine learning in healthcare"
     try:
         logger.info("Starting script execution (Prediction Example).")

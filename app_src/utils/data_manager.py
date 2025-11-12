@@ -25,7 +25,7 @@ def authenticate_dagshub():
             "Missing DAGSHUB_USER or DAGSHUB_TOKEN environment variables."
         )
 
-    # Correct method to add app token
+    
     dagshub.auth.add_app_token(token)
     logger.info(f"✅ Authenticated with DagsHub as {user}")
 
