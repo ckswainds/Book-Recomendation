@@ -214,7 +214,21 @@ class BuildFeatures:
             # Citations score
             try:
                 citations = df_paper["Citations"].fillna(0).astype(float).values.reshape(-1, 1)
-                df_paper["citations_score"] = MinMaxScaler().fit_transform(citations)
+                method = getattr(self.build_features_config, "citations_scaling", "minmax")
+                if method == "standard":
+                    from sklearn.preprocessing import StandardScaler
+
+                    scaler_c = StandardScaler()
+                elif method == "none":
+                    scaler_c = None
+                else:
+                    scaler_c = MinMaxScaler()
+
+                if scaler_c is None:
+                    # keep raw (but filled) citation counts
+                    df_paper["citations_score"] = citations.reshape(-1)
+                else:
+                    df_paper["citations_score"] = scaler_c.fit_transform(citations)
             except Exception as e:
                 logger.exception("Failed to compute citations_score: %s", e)
                 df_paper["citations_score"] = 0.0

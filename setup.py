@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="app_src",
+    name="src",
     version="0.0.1",
     description="A Project on Book and Research paper Recommendation.",
     author="chandan",

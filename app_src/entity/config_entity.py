@@ -22,6 +22,7 @@ class BuildFeatureConfig:
     modified_data_dir:str=os.path.join(MODIFIED_DATA_DIRNAME,MODIFIED_DATA_FOLDER)
     modified_books_data_filepath:str=os.path.join(modified_data_dir,MODIFIED_BOOKS_DATA_FILENAME)
     modified_papers_data_filepath:str=os.path.join(modified_data_dir,MODIFIED_PAPERS_DATA_FILENAME)
+    citations_scaling: str = "minmax"
 
 
 @dataclass

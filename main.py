@@ -1,15 +1,19 @@
 import os,sys
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+SRC_PATH = os.path.join(ROOT_DIR, "src")
+if SRC_PATH not in sys.path:
+    sys.path.insert(0, SRC_PATH)
 import streamlit as st
 import json
 import ast
-# from app_src.entity.artifact_entity import BuildFeaturesArifact
-# from app_src.entity.config_entity import ModelTrainerConfig
-# from app_src.models.model1.predict import RecommenderPredictor
-from app_src.logger import get_logger
-from app_src.models.model2.predict import start_prediction
-import os
+from src.entity.artifact_entity import BuildFeaturesArifact
+from src.entity.config_entity import ModelTrainerConfig
+from src.models.model1.predict import RecommenderPredictor
+from src.logger import get_logger
 
-
+# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
+from src.models.model2.predict import start_prediction
 # Configure page
 st.set_page_config(
     page_title="AI Book & Research Paper Recommender",
@@ -17,9 +21,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
-
-
-
 
 # Custom CSS matching the screenshot with white-green gradient theme
 st.markdown("""
@@ -297,11 +298,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.info(
-    "📘 **Note:** Recommendations are currently available for selected topics in "
-    "**Machine Learning, Deep Learning, NLP, Data Science, AI**, and core **Electronics** areas "
-    "such as **Digital Electronics, Signal Processing, Communication Systems, VLSI, Control Systems.**"
-)
 # Input section
 st.markdown('<div class="input-container">', unsafe_allow_html=True)
 
@@ -310,7 +306,7 @@ col1, col2, col3 = st.columns([4, 1, 1])
 with col1:
     query = st.text_input(
         "Search Query",
-        placeholder="Enter your topic (e.g., machine learning, Deep learning, Vlsi etc.)",
+        placeholder="Enter your topic (e.g., machine learning, quantum physics, etc.)",
         label_visibility="collapsed",
         key="query_input"
     )
@@ -343,11 +339,11 @@ if st.button("Recommend", use_container_width=True):
     else:
         with st.spinner("🔄 Finding the best recommendations..."):
             try:
-                # build_feat_artifact = BuildFeaturesArifact(
-                #     modified_books_data_filepath="data/interim/modified_books.csv",
-                #     modified_papers_data_filepath="data/interim/modified_papers.csv",
-                # )
-                # trainer_cfg = ModelTrainerConfig()
+                build_feat_artifact = BuildFeaturesArifact(
+                    modified_books_data_filepath="data/interim/modified_books.csv",
+                    modified_papers_data_filepath="data/interim/modified_papers.csv",
+                )
+                trainer_cfg = ModelTrainerConfig()
                 
                 # Using sentence transformer
                 output_json = start_prediction(query, n_books=top_n_books, n_papers=top_n_papers)
