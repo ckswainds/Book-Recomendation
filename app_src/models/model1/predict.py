@@ -65,11 +65,11 @@ class RecommenderPredictor:
                 df_paper,
             ) = self._load_artifacts()
 
-            # Compute similarities
+            
             book_sims = self._compute_similarity(self.query, book_tfidf_vectorizer, book_tfidf_matrix)
             paper_sims = self._compute_similarity(self.query, paper_tfidf_vectorizer, paper_tfidf_matrix)
 
-            # Final score same as training logic
+            
             df_books["sim_score"] = book_sims
             df_books["final_score"] = (
                 0.55 * df_books.get("sim_score", 0)
@@ -85,11 +85,11 @@ class RecommenderPredictor:
                 + 0.10 * df_paper.get("recency_score", 0)
             )
 
-            # Select top recommendations
+            
             top_books_df = df_books.sort_values("final_score", ascending=False).head(top_books)
             top_papers_df = df_paper.sort_values("final_score", ascending=False).head(top_papers)
 
-            # Convert to JSON
+            
             result = {
                 "query": self.query,
                 "top_books": top_books_df[["title", "authors","description","publisher","publishedDate","avgrating","previewLink"]].to_dict(orient="records"),

@@ -42,7 +42,6 @@ class BuildFeatures:
             data_cleaning_artifact (DataCleaningArtifact): Artifact with cleaned data file paths.
         """
         try:
-            # store config and artifact for use in methods
             self.build_features_config = build_features_config
             self.data_cleaning_artifact = data_cleaning_artifact
             logger.info(
@@ -76,9 +75,7 @@ class BuildFeatures:
             if pd.isna(text):
                 return ""
             text = str(text).lower()
-            # remove punctuation, keep unicode word characters and whitespace
             text = re.sub(r"[^\w\s]", "", text)
-            # collapse multiple whitespace
             text = re.sub(r"\s+", " ", text).strip()
             return text
         except Exception as e:
@@ -101,14 +98,14 @@ class BuildFeatures:
             logger.info("Building book features from: %s", self.data_cleaning_artifact.cleaned_books_data_filepath)
             df_books = pd.read_csv(self.data_cleaning_artifact.cleaned_books_data_filepath)
 
-            # Ensure expected columns exist; create empty columns and warn if missing.
+            
             expected_cols = ["publishedDate", "avgrating", "pagecount", "title", "description", "categories", "authors"]
             for c in expected_cols:
                 if c not in df_books.columns:
                     logger.warning("Expected column '%s' missing from cleaned books CSV. Creating empty column.", c)
                     df_books[c] = ""
 
-            # Extract a consistent date string then parse year
+            
             df_books["Date_Extracted"] = df_books["publishedDate"].astype(str).str.extract(r"(\d{4}-\d{2}-\d{2}|\d{4})", expand=False)
             df_books["publishedDate"] = pd.to_datetime(df_books["Date_Extracted"], errors="coerce")
             df_books.drop(columns=["Date_Extracted"], inplace=True, errors="ignore")
@@ -116,7 +113,7 @@ class BuildFeatures:
 
             scaler = MinMaxScaler()
 
-            # Recency score: scale available years only
+            
             if df_books["year"].notna().any():
                 valid_years = df_books.loc[df_books["year"].notna(), "year"].astype(float).values.reshape(-1, 1)
                 df_books.loc[df_books["year"].notna(), "recency_score"] = scaler.fit_transform(valid_years)
@@ -125,7 +122,7 @@ class BuildFeatures:
                 df_books["recency_score"] = 0.0
                 logger.warning("No valid publication years found; recency_score set to 0 for all rows")
 
-            # Rating score
+            
             try:
                 ratings = df_books["avgrating"].fillna(0).astype(float).values.reshape(-1, 1)
                 df_books["rating_score"] = MinMaxScaler().fit_transform(ratings)
@@ -134,7 +131,7 @@ class BuildFeatures:
                 df_books["rating_score"] = 0.0
                 logger.warning("Failed to compute rating_score; set to 0 for all rows")
 
-            # Page count score
+            
             try:
                 pages = df_books["pagecount"].fillna(0).astype(float).values.reshape(-1, 1)
                 df_books["page_score"] = MinMaxScaler().fit_transform(pages)
@@ -143,13 +140,12 @@ class BuildFeatures:
                 df_books["page_score"] = 0.0
                 logger.warning("Failed to compute page_score; set to 0 for all rows")
 
-            # Ensure no NaNs in engineered features
+            
             df_books[["recency_score", "rating_score", "page_score"]] = df_books[
                 ["recency_score", "rating_score", "page_score"]
             ].fillna(0)
 
-            # Create combined text feature for vectorization downstream.
-            # Ensure all parts exist and are strings to avoid concatenation errors.
+            
             for text_col in ["title", "description", "categories", "authors"]:
                 if text_col not in df_books.columns:
                     df_books[text_col] = ""
@@ -163,10 +159,10 @@ class BuildFeatures:
                 + df_books["authors"].astype(str)
             )
 
-            # Clean combined_text using the utility
+            
             df_books["combined_text"] = df_books["combined_text"].apply(self.clean_text)
 
-            # Persist modified books
+            
             books_dir = os.path.dirname(self.build_features_config.modified_books_data_filepath)
             os.makedirs(books_dir, exist_ok=True)
             df_books.to_csv(self.build_features_config.modified_books_data_filepath, index=False)
@@ -192,7 +188,7 @@ class BuildFeatures:
             logger.info("Building paper features from: %s", self.data_cleaning_artifact.cleaned_papers_data_filepath)
             df_paper = pd.read_csv(self.data_cleaning_artifact.cleaned_papers_data_filepath)
 
-            # Ensure expected columns exist; create empty columns and warn if missing.
+            
             expected_cols = ["Year", "Citations", "SearchQuery", "Title", "Abstract", "Authors"]
             for c in expected_cols:
                 if c not in df_paper.columns:
@@ -202,7 +198,7 @@ class BuildFeatures:
             df_paper["Year"] = pd.to_numeric(df_paper["Year"], errors="coerce")
             scaler = MinMaxScaler()
 
-            # Recency score for papers
+            
             if df_paper["Year"].notna().any():
                 valid_years = df_paper.loc[df_paper["Year"].notna(), "Year"].astype(float).values.reshape(-1, 1)
                 df_paper.loc[df_paper["Year"].notna(), "recency_score"] = scaler.fit_transform(valid_years)
@@ -211,7 +207,7 @@ class BuildFeatures:
                 df_paper["recency_score"] = 0.0
                 logger.warning("No valid Year values found in papers; recency_score set to 0 for all rows")
 
-            # Citations score
+            
             try:
                 citations = df_paper["Citations"].fillna(0).astype(float).values.reshape(-1, 1)
                 method = getattr(self.build_features_config, "citations_scaling", "minmax")
@@ -225,7 +221,7 @@ class BuildFeatures:
                     scaler_c = MinMaxScaler()
 
                 if scaler_c is None:
-                    # keep raw (but filled) citation counts
+                    
                     df_paper["citations_score"] = citations.reshape(-1)
                 else:
                     df_paper["citations_score"] = scaler_c.fit_transform(citations)
@@ -236,7 +232,7 @@ class BuildFeatures:
 
             df_paper[["recency_score", "citations_score"]] = df_paper[["recency_score", "citations_score"]].fillna(0)
 
-            # Build combined_text for papers
+            
             for text_col in ["SearchQuery", "Title", "Abstract", "Authors"]:
                 if text_col not in df_paper.columns:
                     df_paper[text_col] = ""
@@ -252,7 +248,7 @@ class BuildFeatures:
 
             df_paper["combined_text"] = df_paper["combined_text"].apply(self.clean_text)
 
-            # Persist modified papers
+            
             papers_dir = os.path.dirname(self.build_features_config.modified_papers_data_filepath)
             os.makedirs(papers_dir, exist_ok=True)
             df_paper.to_csv(self.build_features_config.modified_papers_data_filepath, index=False)

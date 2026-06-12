@@ -9,7 +9,6 @@ import os
 from app_src.logger import get_logger 
 import numpy as np
 from app_src.helper import get_query_embedding
-# Initialize logger
 logger = get_logger(__name__)
 
 class RecommendationModel:
@@ -52,13 +51,8 @@ class RecommendationModel:
         """
         try:
             logger.info("Starting model training (embedding generation)...")
-            # Load the Sentence Transformer model
-            # model=SentenceTransformer(self.model_config.sentence_transformer_model_path)
-            # logger.info(f"Loaded SentenceTransformer model from: {self.model_config.sentence_transformer_model_path}")
-
-            # Generate embeddings
-            # embeddings_books = model.encode(book_df["combined_text"].tolist(),normalize_embeddings=True)
-            # embeddings_paper = model.encode(paper_df["combined_text"].tolist(),normalize_embeddings=True)
+            embeddings_books=get_query_embedding(book_df["combined_text"].tolist())
+            embeddings_paper=get_query_embedding(paper_df["combined_text"].tolist())
             embeddings_books=get_query_embedding(book_df["combined_text"].tolist())
             embeddings_paper=get_query_embedding(paper_df["combined_text"].tolist())
             
@@ -67,12 +61,10 @@ class RecommendationModel:
             logger.info(f"Papers Embedding shape: {embeddings_paper.shape}")
             print(f"Papers Embedding shape:{embeddings_paper.shape}")
 
-            # Create directory for matrices if it doesn't exist
             matrix_dir=os.path.dirname(self.model_config.sentence_transformer_book_matrix_filepath)
             os.makedirs(matrix_dir,exist_ok=True)
             logger.info(f"Created directory for saving matrices: {matrix_dir}")
-
-            # Save embeddings as sparse matrices (though the output of encode is dense, sp.save_npz handles it)
+            
             np.save(self.model_config.sentence_transformer_book_matrix_filepath, embeddings_books)
             logger.info(f"Saved book embeddings to: {self.model_config.sentence_transformer_book_matrix_filepath}")
             
@@ -105,43 +97,32 @@ class RecommendationModel:
         try:
             logger.info(f"Starting recommendation for query: '{query}' with n_books={n_books}, n_papers={n_papers}")
             
-            # Load dataframes
             df_books = pd.read_csv(self.build_feature_artifact.modified_books_data_filepath)
             logger.info(f"Loaded books data from: {self.build_feature_artifact.modified_books_data_filepath}")
             
             df_paper = pd.read_csv(self.build_feature_artifact.modified_papers_data_filepath)
             logger.info(f"Loaded papers data from: {self.build_feature_artifact.modified_papers_data_filepath}")
             
-            # Load the sentence transformer model
-            # model=SentenceTransformer(self.model_config.sentence_transformer_model_path)
-            # logger.info(f"Loaded SentenceTransformer model for query encoding.")
-            
-            # Encode the query
             
             query_embedding=get_query_embedding(query)
             logger.info("Encoded query into embedding.")
             
-            # Load the sentence_transformer_book_matrix
             book_matrix = np.load(self.model_config.sentence_transformer_book_matrix_filepath)
             logger.info(f"Loaded book embedding matrix from: {self.model_config.sentence_transformer_book_matrix_filepath}")
             
-            # Load the sentence_transformer_paper_matrix
             paper_matrix = np.load(self.model_config.sentence_transformer_paper_matrix_filepath)
             logger.info(f"Loaded paper embedding matrix from: {self.model_config.sentence_transformer_paper_matrix_filepath}")
             
-            # Calculate the similarity score for books (Cosine Similarity)
             book_sims=cosine_similarity(query_embedding.reshape(1, -1), book_matrix)
             logger.debug("Calculated cosine similarity for books.")
             
-            # Calculate the similarity score for papers (Cosine Similarity)
             paper_sims=cosine_similarity(query_embedding.reshape(1, -1), paper_matrix)
             logger.debug("Calculated cosine similarity for papers.")
             
-            # Reshape both the matrices to be 1D arrays
             book_sims=book_sims.reshape(-1)
             paper_sims=paper_sims.reshape(-1)
             
-            # Calculate the final score for books
+            
             df_books["sim_score"]=book_sims
             df_books["final_score"] = (
                 0.55 * df_books["sim_score"] +
@@ -151,7 +132,7 @@ class RecommendationModel:
             )
             logger.debug("Calculated final weighted scores for books.")
             
-            # Final paper scores
+            
             df_paper["sim_score"]=paper_sims
             df_paper["final_score"] = (
                 0.60 * df_paper["sim_score"] +

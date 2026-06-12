@@ -10,7 +10,7 @@ import json
 import ast
 from app_src.models.model2.predict import start_prediction
 
-# The application instance must be named 'app' for the Docker CMD to find it: app:app
+
 app = FastAPI() 
 logger = get_logger(log_filename="app.log")
 

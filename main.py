@@ -11,10 +11,8 @@ from src.entity.config_entity import ModelTrainerConfig
 from src.models.model1.predict import RecommenderPredictor
 from src.logger import get_logger
 
-# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-# sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
+ 
 from src.models.model2.predict import start_prediction
-# Configure page
 st.set_page_config(
     page_title="AI Book & Research Paper Recommender",
     page_icon="📚",
@@ -22,7 +20,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS matching the screenshot with white-green gradient theme
 st.markdown("""
     <style>
     /* Import Google Fonts for better typography */
@@ -283,14 +280,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize logger
+ 
 logger = get_logger(log_filename="app.log")
 
-# Initialize session state
 if 'results' not in st.session_state:
     st.session_state.results = None
 
-# Header
 st.markdown("""
     <div class="main-header">
         <h1>AI Book & Research Paper Recommender</h1>

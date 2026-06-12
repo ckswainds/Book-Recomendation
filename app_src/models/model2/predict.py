@@ -5,7 +5,6 @@ from app_src.entity.artifact_entity import BuildFeaturesArifact
 from app_src.models.model2.model import RecommendationModel
 from app_src.logger import get_logger
 from app_src.utils.data_manager import ensure_all_data_available
-# Initialize logger for the prediction script
 logger = get_logger(__name__)
 
 
@@ -32,7 +31,7 @@ def start_prediction(query: str, n_books: int = 5, n_papers: int = 5) -> dict:
     try:
         logger.info(f"Starting prediction for query: '{query}' ({n_books} books, {n_papers} papers).")
         ensure_all_data_available()
-        # Initialize configuration and feature artifacts 
+        
         model_config = ModelConfig()
         build_feature_artifact = BuildFeaturesArifact(
         modified_books_data_filepath="data/interim/modified_books.csv",
@@ -41,20 +40,17 @@ def start_prediction(query: str, n_books: int = 5, n_papers: int = 5) -> dict:
 
         logger.info("Configuration and feature artifact paths loaded for prediction.")
 
-        # Initialize the recommendation model
         model = RecommendationModel(
             model_config=model_config,
             build_feature_artifact=build_feature_artifact
         )
         logger.info("RecommendationModel instantiated for prediction.")
 
-        # Run the recommendation process
         result_json = model.recommend(query=query, n_books=n_books, n_papers=n_papers)
         logger.info("Recommendation logic execution completed successfully.")
 
         result = json.loads(result_json)
 
-        # Print the results for immediate feedback
         print("Prediction completed successfully!")
         print("\nTop Recommended Books:")
         for book in result["top_books"]:

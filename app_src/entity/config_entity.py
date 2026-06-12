@@ -39,16 +39,13 @@ class ModelTrainerConfig:
     """
     model_trainer_dir: str = os.path.join(MODEL_OUTPUT_DIR, MODEL_OUTPTUT_DATA_FOLDER)
 
-    # separate sub-folders for organization
     matrices_dir: str = os.path.join(model_trainer_dir, "matrices")
     objects_dir: str = os.path.join(model_trainer_dir, "models")
     final_dir: str = os.path.join(model_trainer_dir, "final")
 
-    # object (model/vectorizer) filepaths go to objects_dir
     book_tfidf_model_filepath: str = os.path.join(objects_dir, BOOK_TF_IDF_MODEL)
     paper_tfidf_model_filepath: str = os.path.join(objects_dir, PAPER_TF_IDF_MODEL)
 
-    # matrix filepaths go to matrices_dir
     book_tfidf_matrix_filepath: str = os.path.join(matrices_dir, BOOK_TFIDF_MATRIX)
     paper_tfidf_matrix_filepath: str = os.path.join(matrices_dir, PAPER_TFIDF_MATRIX)
     

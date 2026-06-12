@@ -59,12 +59,12 @@ class RecommendationModelTrainer:
         try:
             logger.info("Starting TF-IDF model training pipeline")
 
-            # Load interim modified data
+            
             df_books = pd.read_csv(self.build_feature_artifact.modified_books_data_filepath)
             df_papers = pd.read_csv(self.build_feature_artifact.modified_papers_data_filepath)
             logger.info("Loaded %d books and %d papers for TF-IDF training", len(df_books), len(df_papers))
 
-            # --- Books TF-IDF ---
+            
             if os.path.exists(self.model_trainer_config.book_tfidf_model_filepath) and os.path.exists(self.model_trainer_config.book_tfidf_matrix_filepath):
                 logger.info("Book TF-IDF artifacts already exist. Skipping training.")
             else:
@@ -77,7 +77,7 @@ class RecommendationModelTrainer:
                 sp.save_npz(self.model_trainer_config.book_tfidf_matrix_filepath, book_tfidf_matrix)
                 logger.info("Saved Book TF-IDF vectorizer and matrix")
 
-            # --- Papers TF-IDF ---
+            
             if os.path.exists(self.model_trainer_config.paper_tfidf_model_filepath) and os.path.exists(self.model_trainer_config.paper_tfidf_matrix_filepath):
                 logger.info("Paper TF-IDF artifacts already exist. Skipping training.")
             else:
@@ -90,7 +90,7 @@ class RecommendationModelTrainer:
                 sp.save_npz(self.model_trainer_config.paper_tfidf_matrix_filepath, paper_tfidf_matrix)
                 logger.info("Saved Paper TF-IDF vectorizer and matrix")
 
-            # Return artifact
+            
             artifact = ModelTrainerArtifact(
                 book_tfidf_model_filepath=self.model_trainer_config.book_tfidf_model_filepath,
                 paper_tfidf_model_filepath=self.model_trainer_config.paper_tfidf_model_filepath,
